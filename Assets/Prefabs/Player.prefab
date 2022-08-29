@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4795102097064264729}
   - component: {fileID: 4795102097064264735}
   - component: {fileID: 4795102097064264728}
-  - component: {fileID: 1670871258}
+  - component: {fileID: 1425893024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -84,9 +84,7 @@ MonoBehaviour:
   tripleShotLaserPrefab: {fileID: 8455815784241194389, guid: 7d1d41a7671e47e4f896a87b7c136077,
     type: 3}
   _laserOffset: {fileID: 4795102097382405451}
-  _audioClips:
-  - {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
-  - {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _playerShieldVisualizer: {fileID: 4795102098121476257}
   _isTripleShotActive: 0
   _isShieldActive: 0
@@ -96,7 +94,7 @@ MonoBehaviour:
   blinkRate: 0.2
   numberofBlinks: 3
   _playerSprite: {fileID: 4795102097645412199}
---- !u!82 &1670871258
+--- !u!82 &1425893024
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,9 +104,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -461,9 +459,7 @@ MonoBehaviour:
   tripleShotLaserPrefab: {fileID: 8455815784241194389, guid: 7d1d41a7671e47e4f896a87b7c136077,
     type: 3}
   _laserOffset: {fileID: 4795102097382405451}
-  _audioClips:
-  - {fileID: 0}
-  - {fileID: 0}
+  _audioClip: {fileID: 0}
   _playerShieldVisualizer: {fileID: 4795102098121476257}
   _isTripleShotActive: 0
   _isShieldActive: 0

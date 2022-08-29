@@ -5,7 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Animator anim;
+
     private AudioSource _audioSource;
+
     [SerializeField]
     private AudioClip _exploAudioClip;
 
@@ -15,12 +17,26 @@ public class Enemy : MonoBehaviour
 
     private float _bottomBarrier = -7f;
 
-    private Player _player;
-
-    
     private bool canMove;
 
-    
+    [Header("Shooting Settings")]
+    [SerializeField]
+    private float _fireRate = 0.3f;
+
+    [SerializeField]
+    private GameObject laserPrefab;
+
+    [SerializeField]
+    private Transform barrelOffset;
+
+    private float _canFire = -1f;
+
+    //private bool _canFire;
+
+    private Player _player;
+
+
+
     //private bool animDonePlaying = false;
 
     /*
@@ -84,17 +100,39 @@ public class Enemy : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {       
+    {
+        EnemyMovement();
+
+        if (Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+
+            _canFire = Time.time + _fireRate;
+
+            GameObject laser = Instantiate(laserPrefab, barrelOffset.position, Quaternion.identity);
+
+            Laser[] lasers = laser.GetComponentsInChildren<Laser>();
+
+            foreach (Laser lasser in lasers)
+            {
+                lasser.AssignEnemyLaser();
+            }
+
+            
+        }
+    }
+    void EnemyMovement()
+    {
         if (canMove == true)
         {
             transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
         }
-        
-        
+
+
         if (transform.position.y <= _bottomBarrier)
         {
             float newXPos = Random.Range(-8f, 8f);
-            transform.position = new Vector3(newXPos, 7f, 0f);       
+            transform.position = new Vector3(newXPos, 7f, 0f);
         }
     }
 
@@ -119,7 +157,7 @@ public class Enemy : MonoBehaviour
             }
 
         }
-        else if (other.tag == "Laser")
+        else if (other.tag == "PlayerLaser")
         {
             this.gameObject.GetComponent<Collider2D>().enabled = false;
 

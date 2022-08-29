@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     private AudioSource _playerAudioSource;
 
     [SerializeField]
-    private AudioClip[] _audioClips = new AudioClip[2];
+    private AudioClip _audioClip;
 
     private bool _canFire;
 
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _playerAudioSource = gameObject.GetComponent<AudioSource>();
+        _playerAudioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -89,6 +89,11 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("UIManager is Null.");
+        }
+
+        if (_playerAudioSource == null)
+        {
+            Debug.LogError("Player AudioSource is Null.");
         }
 
         currentLives = _maxLives;
@@ -147,7 +152,8 @@ public class Player : MonoBehaviour
         //Testing 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
+            Damage();
+            //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
     }
 
@@ -168,7 +174,7 @@ public class Player : MonoBehaviour
             StartCoroutine(LaserCoolDownTimer());
         }
 
-        _playerAudioSource.clip = _audioClips[0];
+        _playerAudioSource.clip = _audioClip;
         _playerAudioSource.Play();
         
     }
@@ -230,8 +236,6 @@ public class Player : MonoBehaviour
                 _spawnManager.StopSpawning();
             }
 
-            _playerAudioSource.clip = _audioClips[1];
-            _playerAudioSource.Play();
 
             Destroy(gameObject);
         }
