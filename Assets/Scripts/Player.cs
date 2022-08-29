@@ -40,6 +40,12 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Transform _laserOffset;
+
+    private AudioSource _playerAudioSource;
+
+    [SerializeField]
+    private AudioClip[] _audioClips = new AudioClip[2];
+
     private bool _canFire;
 
     [Header("PowerUps Settings")]
@@ -73,6 +79,7 @@ public class Player : MonoBehaviour
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _playerAudioSource = gameObject.GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -160,6 +167,10 @@ public class Player : MonoBehaviour
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
         }
+
+        _playerAudioSource.clip = _audioClips[0];
+        _playerAudioSource.Play();
+        
     }
 
     IEnumerator LaserCoolDownTimer()
@@ -198,10 +209,14 @@ public class Player : MonoBehaviour
         if (currentLives == 2)
         {
             _rightDamagedEngine.SetActive(true);
+            //_playerAudioSource.clip = _audioClips[1];
+            //_playerAudioSource.Play();
         }
         else if (currentLives == 1)
         {
             _leftDamagedEngine.SetActive(true);
+            //_playerAudioSource.clip = _audioClips[1];
+            //_playerAudioSource.Play();
         }
      
         StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));
@@ -214,6 +229,9 @@ public class Player : MonoBehaviour
             {
                 _spawnManager.StopSpawning();
             }
+
+            _playerAudioSource.clip = _audioClips[1];
+            _playerAudioSource.Play();
 
             Destroy(gameObject);
         }

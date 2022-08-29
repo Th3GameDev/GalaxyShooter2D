@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    //private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _audioClip;
+
     [Header("Power-Up Settings")]
     [SerializeField]
     [Range(1f, 5f)]
@@ -23,6 +27,7 @@ public class PowerUp : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        //_audioSource = GetComponent<AudioSource>();
 
         if (transform.position.y <= -6.6f)
         {
@@ -36,12 +41,14 @@ public class PowerUp : MonoBehaviour
         {
             Player player = col.GetComponent<Player>();
 
+            AudioSource.PlayClipAtPoint(_audioClip, transform.position, 1);
+
             if (player != null)
-            {
+            {           
                 switch (_powerUpID)
                 {
                     case 0:
-                        player.ActivateTripleShot();
+                        player.ActivateTripleShot();                
                         break;
 
                     case 1:

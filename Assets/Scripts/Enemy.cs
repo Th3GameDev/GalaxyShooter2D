@@ -5,6 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Animator anim;
+    private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _exploAudioClip;
 
     [SerializeField]
     [Range(0f, 5f)]
@@ -16,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     
     private bool canMove;
+
+    
     //private bool animDonePlaying = false;
 
     /*
@@ -61,6 +66,8 @@ public class Enemy : MonoBehaviour
     {
         canMove = true;
 
+        _audioSource = gameObject.GetComponent<AudioSource>();
+
         _player = GameObject.Find("Player").GetComponent<Player>();
 
         anim = GetComponent<Animator>();
@@ -101,6 +108,8 @@ public class Enemy : MonoBehaviour
             _movementSpeed = 0;
 
             anim.SetTrigger("OnDestroy");
+            _audioSource.clip = _exploAudioClip;
+            _audioSource.Play();
 
             Destroy(this.gameObject, 1.2f);
 
@@ -117,6 +126,9 @@ public class Enemy : MonoBehaviour
             _movementSpeed = 0f;
 
             anim.SetTrigger("OnDestroy");
+
+            _audioSource.clip = _exploAudioClip;
+            _audioSource.Play();
 
             Destroy(this.gameObject, 1.2f);
 
