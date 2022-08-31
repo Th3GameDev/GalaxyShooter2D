@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4569424194566470513}
   m_Layer: 0
   m_Name: laser_Left
-  m_TagString: Laser
+  m_TagString: PlayerLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 93b05e634216fc14fb18e71a528ed291, type: 3}
-  m_Color: {r: 1, g: 0.4302339, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.88481283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _LaserSpeed: 8
+  isEnemyLaser: 0
 --- !u!1 &7972992598568677814
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +160,7 @@ GameObject:
   - component: {fileID: 2003362242237994830}
   m_Layer: 0
   m_Name: laser_Front
-  m_TagString: Laser
+  m_TagString: PlayerLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +219,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 93b05e634216fc14fb18e71a528ed291, type: 3}
-  m_Color: {r: 1, g: 0.4302339, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.88481283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -288,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _LaserSpeed: 8
+  isEnemyLaser: 0
 --- !u!1 &8330913372509836139
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +305,7 @@ GameObject:
   - component: {fileID: 501522766240396691}
   m_Layer: 0
   m_Name: laser_Right
-  m_TagString: Laser
+  m_TagString: PlayerLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -362,7 +364,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 93b05e634216fc14fb18e71a528ed291, type: 3}
-  m_Color: {r: 1, g: 0.4302339, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.88481283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -432,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _LaserSpeed: 8
+  isEnemyLaser: 0
 --- !u!1 &8455815784241194389
 GameObject:
   m_ObjectHideFlags: 0

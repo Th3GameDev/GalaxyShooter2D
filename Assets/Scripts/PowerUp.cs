@@ -14,7 +14,7 @@ public class PowerUp : MonoBehaviour
     private float _speed;
 
     [SerializeField] //0 == TripleShot 1 == SpeedBoost 2 == Shield
-    [Range(0, 2)]
+    [Range(0, 3)]
     private int _powerUpID;
 
     // Start is called before the first frame update
@@ -57,6 +57,10 @@ public class PowerUp : MonoBehaviour
 
                     case 2:
                         player.ActivateShield();
+                        break;
+
+                    case 3:
+                        player.ActivateRepair();
                         break;
 
                     default:

@@ -103,22 +103,15 @@ public class Enemy : MonoBehaviour
     {
         EnemyMovement();
 
+        // Redo Enemy Fire //
+
         if (Time.time > _canFire)
         {
-            _fireRate = Random.Range(3f, 7f);
+            _fireRate = Random.Range(5f, 10f);
 
             _canFire = Time.time + _fireRate;
 
-            GameObject laser = Instantiate(laserPrefab, barrelOffset.position, Quaternion.identity);
-
-            Laser[] lasers = laser.GetComponentsInChildren<Laser>();
-
-            foreach (Laser lasser in lasers)
-            {
-                lasser.AssignEnemyLaser();
-            }
-
-            
+            Instantiate(laserPrefab, barrelOffset.position, Quaternion.identity);  
         }
     }
     void EnemyMovement()
