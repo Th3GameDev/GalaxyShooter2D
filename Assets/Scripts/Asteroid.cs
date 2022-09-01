@@ -7,10 +7,10 @@ public class Asteroid : MonoBehaviour
     private SpawnManager _spawnManager;
 
     [SerializeField]
-    private GameObject exploPrefab;
+    private GameObject _exploPrefab;
 
     [SerializeField]
-    private float rotSpeed = 20f;
+    private float _rotSpeed = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,14 +26,14 @@ public class Asteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {     
-        transform.Rotate(new Vector3(0, 0, -1 * rotSpeed * Time.deltaTime));
+        transform.Rotate(new Vector3(0, 0, -1 * _rotSpeed * Time.deltaTime));
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
        if (col.gameObject.CompareTag("PlayerLaser"))
        {        
-            Instantiate(exploPrefab, gameObject.transform.position, Quaternion.identity);
+            Instantiate(_exploPrefab, gameObject.transform.position, Quaternion.identity);
             
             Destroy(col.gameObject);
 

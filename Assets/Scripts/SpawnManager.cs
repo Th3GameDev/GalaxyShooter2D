@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     private int _lastSelectedPosition;
     private int _initialSpawnPositionCount = 9;
     //Vector3 posTemp;
-    Vector3 _lastPos;
+    private Vector3 _lastPos;
 
 
 

@@ -179,9 +179,9 @@ MonoBehaviour:
   _exploAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _movementSpeed: 4
   _fireRate: 0.3
-  laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
+  _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
     type: 3}
-  barrelOffset: {fileID: 6328786189543673847}
+  _barrelOffset: {fileID: 6328786189543673847}
 --- !u!95 &6719487967566321006
 Animator:
   serializedVersion: 3

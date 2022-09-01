@@ -7,13 +7,13 @@ public class Laser : MonoBehaviour
     [Header("Player Laser")]
     [SerializeField]
     [Range(0f, 10f)]
-    private float _LaserSpeed = 8f;
+    private float _laserSpeed = 8f;
 
     private float _boundaryY = 5.5f;
 
     [Header("Enemy Laser")]
     [SerializeField]
-    private bool isEnemyLaser = false;
+    private bool _isEnemyLaser = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isEnemyLaser == false)
+        if (_isEnemyLaser == false)
         {
             MoveUp();
         }
@@ -36,7 +36,7 @@ public class Laser : MonoBehaviour
 
     void MoveUp()
     {
-        transform.Translate(Vector3.up * _LaserSpeed * Time.deltaTime);
+        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
 
         if (transform.position.y >= _boundaryY)
         {
@@ -52,7 +52,7 @@ public class Laser : MonoBehaviour
 
     void MoveDown()
     {
-        transform.Translate(Vector3.down * _LaserSpeed * Time.deltaTime);
+        transform.Translate(Vector3.down * _laserSpeed * Time.deltaTime);
 
         if (transform.position.y <= -_boundaryY)
         {
@@ -67,13 +67,13 @@ public class Laser : MonoBehaviour
 
     public void AssignEnemyLaser()
     {
-        isEnemyLaser = true;
+        _isEnemyLaser = true;
     }
 
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Player") && isEnemyLaser == true)
+        if (col.CompareTag("Player") && _isEnemyLaser == true)
         {
             Player player = col.GetComponent<Player>();
 

@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private float _loadSpeed = 1f;
 
-    private float loadPercentage;
+    private float _loadPercentage;
 
     //[SerializeField]
     //private TextMeshProUGUI _LoadingText;
@@ -54,11 +54,11 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        _percentText.text = Mathf.RoundToInt(loadPercentage) + "%";
+        _percentText.text = Mathf.RoundToInt(_loadPercentage) + "%";
 
-        if (loadPercentage >= 100)
+        if (_loadPercentage >= 100)
         {
-            loadPercentage = 100;
+            _loadPercentage = 100;
 
             StartCoroutine(SceneTransition());
         }
@@ -81,21 +81,21 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator LoadingBar()
     {
-        while (loadPercentage != 100)
+        while (_loadPercentage != 100)
         {
-            if (loadPercentage < 50)
+            if (_loadPercentage < 50)
             {
                 yield return new WaitForSeconds(0.3f);
 
-                loadPercentage = _loadingBar.value += 50;
+                _loadPercentage = _loadingBar.value += 50;
             }
-            else if (loadPercentage >= 50 && loadPercentage < 100)
+            else if (_loadPercentage >= 50 && _loadPercentage < 100)
             {
                 yield return new WaitForSeconds(0.1f);
 
-                loadPercentage = _loadingBar.value += 10 * _loadSpeed * Time.deltaTime;
+                _loadPercentage = _loadingBar.value += 10 * _loadSpeed * Time.deltaTime;
             }
-            else if (loadPercentage >= 100)
+            else if (_loadPercentage >= 100)
             {
                 isLoaded = true;
                 break;
@@ -110,7 +110,7 @@ public class MainMenu : MonoBehaviour
 
         yield return new WaitForSeconds(sceneTransitionTime);
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
 

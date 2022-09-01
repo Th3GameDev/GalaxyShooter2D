@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Animator anim;
+    private Animator _anim;
 
     private AudioSource _audioSource;
 
@@ -17,17 +17,17 @@ public class Enemy : MonoBehaviour
 
     private float _bottomBarrier = -7f;
 
-    private bool canMove;
+    private bool _canMove;
 
     [Header("Shooting Settings")]
     [SerializeField]
     private float _fireRate = 0.3f;
 
     [SerializeField]
-    private GameObject laserPrefab;
+    private GameObject _laserPrefab;
 
     [SerializeField]
-    private Transform barrelOffset;
+    private Transform _barrelOffset;
 
     private float _canFire = -1f;
 
@@ -80,15 +80,15 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canMove = true;
+        _canMove = true;
 
         _audioSource = gameObject.GetComponent<AudioSource>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
 
-        if (anim == null)
+        if (_anim == null)
         {
             Debug.LogWarning("Animator is Null");
         }
@@ -111,12 +111,12 @@ public class Enemy : MonoBehaviour
 
             _canFire = Time.time + _fireRate;
 
-            Instantiate(laserPrefab, barrelOffset.position, Quaternion.identity);  
+            Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);  
         }
     }
     void EnemyMovement()
     {
-        if (canMove == true)
+        if (_canMove == true)
         {
             transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
         }
@@ -138,7 +138,7 @@ public class Enemy : MonoBehaviour
 
             _movementSpeed = 0;
 
-            anim.SetTrigger("OnDestroy");
+            _anim.SetTrigger("OnDestroy");
             _audioSource.clip = _exploAudioClip;
             _audioSource.Play();
 
@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour
 
             _movementSpeed = 0f;
 
-            anim.SetTrigger("OnDestroy");
+            _anim.SetTrigger("OnDestroy");
 
             _audioSource.clip = _exploAudioClip;
             _audioSource.Play();

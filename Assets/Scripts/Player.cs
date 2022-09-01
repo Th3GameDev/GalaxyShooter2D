@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private int _maxLives = 3;
 
     [SerializeField]
-    private int currentLives;
+    private int _currentLives;
 
     [SerializeField]
     [Range(0f, 10f)]
@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _leftDamagedEngine, _rightDamagedEngine;
+
+    [SerializeField]
+    private GameObject _exploPrefab;
 
     [Header("Shooting Settings")]
     [SerializeField]
@@ -96,7 +99,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Player AudioSource is Null.");
         }
 
-        currentLives = _maxLives;
+        _currentLives = _maxLives;
 
         _player = transform;
 
@@ -210,15 +213,15 @@ public class Player : MonoBehaviour
             return;
         }
 
-        currentLives--;
+        _currentLives--;
 
-        if (currentLives == 2)
+        if (_currentLives == 2)
         {
             _rightDamagedEngine.SetActive(true);
             //_playerAudioSource.clip = _audioClips[1];
             //_playerAudioSource.Play();
         }
-        else if (currentLives == 1)
+        else if (_currentLives == 1)
         {
             _leftDamagedEngine.SetActive(true);
             //_playerAudioSource.clip = _audioClips[1];
@@ -227,15 +230,16 @@ public class Player : MonoBehaviour
      
         StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));
 
-        _uiManager.UpdateLivesDisplay(currentLives);
+        _uiManager.UpdateLivesDisplay(_currentLives);
 
-        if (currentLives < 1)
+        if (_currentLives < 1)
         {
             if (_spawnManager != null)
             {
                 _spawnManager.StopSpawning();
             }
 
+            Instantiate(_exploPrefab, gameObject.transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }
@@ -253,17 +257,17 @@ public class Player : MonoBehaviour
 
     public void ActivateRepair()
     {
-        if (currentLives == 2)
+        if (_currentLives == 2)
         {
-            currentLives++;
+            _currentLives++;
             _rightDamagedEngine.SetActive(false);
-            _uiManager.UpdateLivesDisplay(currentLives);
+            _uiManager.UpdateLivesDisplay(_currentLives);
         }
-        else if (currentLives == 1)
+        else if (_currentLives == 1)
         {
-            currentLives++;
+            _currentLives++;
             _leftDamagedEngine.SetActive(false);
-            _uiManager.UpdateLivesDisplay(currentLives);
+            _uiManager.UpdateLivesDisplay(_currentLives);
         }
     }
 
