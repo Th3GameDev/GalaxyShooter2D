@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _scoreText;
 
+    [Header("Ammo UI")]
+    [SerializeField]
+    private TextMeshProUGUI _ammoCountText;
+
     [Header("GameOver UI")]
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
@@ -48,7 +52,14 @@ public class UIManager : MonoBehaviour
         _restartLevelText.gameObject.SetActive(false);
 
         _scoreText.text = "Score: " + 0;
+
+        _ammoCountText.text = "Ammo:" + 15;
     }
+    public void UpdateAmmoCount(int playerAmmo)
+    {  
+        _ammoCountText.text = $"Ammo:{playerAmmo}";
+    }
+
 
     public void UpdateScore(int playerScore)
     {

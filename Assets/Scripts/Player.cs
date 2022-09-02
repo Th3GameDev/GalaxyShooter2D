@@ -38,6 +38,12 @@ public class Player : MonoBehaviour
 
     [Header("Shooting Settings")]
     [SerializeField]
+    private int _maxAmmo = 15;
+
+    [SerializeField]
+    private int _currentAmmo;
+
+    [SerializeField]
     [Range(0f, 1f)]
     private float _fireRate = 0.2f;
 
@@ -92,6 +98,8 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAudioSource = GetComponent<AudioSource>();
+
+        _currentAmmo = _maxAmmo;
 
         _shieldColor = _shieldSpriteRend.color;
 
@@ -182,13 +190,21 @@ public class Player : MonoBehaviour
         //Testing 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Damage();
+            ActivateReload();
+            //Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
     }
 
     void Shoot()
     {
+        if (_currentAmmo >= 1)
+        {
+            _currentAmmo--;
+        }
+
+        _uiManager.UpdateAmmoCount(_currentAmmo);
+
         if (_isTripleShotActive)
         {
             _fireRate = 0.5f;
@@ -196,7 +212,7 @@ public class Player : MonoBehaviour
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
         }
-        else
+        else if (_currentAmmo > 0)
         {
             _fireRate = 0.3f;
             Instantiate(_laserPrefab, _laserOffset.position, Quaternion.identity);
@@ -297,6 +313,12 @@ public class Player : MonoBehaviour
         {
             _uiManager.UpdateScore(_score);
         }
+    }
+
+    public void ActivateReload()
+    {
+        _currentAmmo = _maxAmmo;
+        _uiManager.UpdateAmmoCount(_currentAmmo);
     }
 
     public void ActivateRepair()
