@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     private GameObject _playerShieldVisualizer;
 
     [SerializeField]
-    private bool _isTripleShotActive, _isShieldActive;
+    private bool _isTripleShotActive, _isShieldActive, _isSpeedBoostActive;
 
     [SerializeField]
     [Range(0f, 5f)]
@@ -139,6 +139,22 @@ public class Player : MonoBehaviour
 
         _player.position = new Vector3(_player.position.x, Mathf.Clamp(_player.position.y, -_boundaryY, _boundaryY), 0);
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (_isSpeedBoostActive == false)
+            {
+                _movementSpeed = 6.5f;
+            }
+        }
+        else
+        {
+            if (_isSpeedBoostActive == false)
+            {
+                _movementSpeed = 5f;
+            }
+        } 
+        
+
         /*
         if (_player.position.y >= _boundaryY)
         {
@@ -179,7 +195,7 @@ public class Player : MonoBehaviour
 
         _playerAudioSource.clip = _audioClip;
         _playerAudioSource.Play();
-        
+
     }
 
     IEnumerator LaserCoolDownTimer()
@@ -190,15 +206,15 @@ public class Player : MonoBehaviour
 
     public IEnumerator BlinkGameObject(GameObject gameObject, int numBlinks, float seconds)
     {
-       
+
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
-       
+
         for (int i = 0; i < numBlinks + 1; i++)
         {
             bool isActive = gameObject.activeSelf;
 
             gameObject.SetActive(!isActive);
-           
+
             yield return new WaitForSeconds(seconds);
         }
 
@@ -227,7 +243,7 @@ public class Player : MonoBehaviour
             //_playerAudioSource.clip = _audioClips[1];
             //_playerAudioSource.Play();
         }
-     
+
         StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));
 
         _uiManager.UpdateLivesDisplay(_currentLives);
@@ -279,7 +295,8 @@ public class Player : MonoBehaviour
 
     public void ActivateSpeedBoost()
     {
-        _movementSpeed += _speedMultiplier;
+        _isSpeedBoostActive = true;
+        _movementSpeed = 5f + _speedMultiplier;
         StartCoroutine(SpeedBoostTimer());
     }
 
@@ -299,6 +316,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(_SpeedBoostTimeActive);
         _movementSpeed = 5f;
+        _isSpeedBoostActive = false;
     }
 
 }

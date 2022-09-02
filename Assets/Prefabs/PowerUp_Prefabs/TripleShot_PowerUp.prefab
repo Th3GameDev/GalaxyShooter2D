@@ -137,6 +137,7 @@ MonoBehaviour:
   _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _speed: 3
   _powerUpID: 0
+  _canMove: 1
 --- !u!95 &1247708023
 Animator:
   serializedVersion: 3
@@ -145,7 +146,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6887113265765559422}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8d7f3feeac38f4e4e9cdfe3f0839f9e8, type: 2}
   m_CullingMode: 0

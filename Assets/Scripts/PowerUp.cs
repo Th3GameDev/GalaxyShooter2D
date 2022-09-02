@@ -17,6 +17,9 @@ public class PowerUp : MonoBehaviour
     [Range(0, 3)]
     private int _powerUpID;
 
+    [SerializeField]
+    private bool _canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +29,11 @@ public class PowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (_canMove)
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+       
         //_audioSource = GetComponent<AudioSource>();
 
         if (transform.position.y <= -6.6f)
