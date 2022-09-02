@@ -75,6 +75,7 @@ MonoBehaviour:
   _score: 0
   _maxLives: 3
   _currentLives: 0
+  _shieldLevel: 0
   _movementSpeed: 5
   _leftDamagedEngine: {fileID: 4795102097478655971}
   _rightDamagedEngine: {fileID: 4795102097768416650}
@@ -88,8 +89,11 @@ MonoBehaviour:
   _laserOffset: {fileID: 4795102097382405451}
   _audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _playerShieldVisualizer: {fileID: 4795102098121476257}
+  _shieldSpriteRend: {fileID: 4795102098121476268}
+  _shieldColor: {r: 1, g: 1, b: 1, a: 1}
   _isTripleShotActive: 0
   _isShieldActive: 0
+  _isSpeedBoostActive: 0
   _tripleShotTimeActive: 5
   _SpeedBoostTimeActive: 3
   _speedMultiplier: 3.5
@@ -333,8 +337,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4795102097645412195}
   - component: {fileID: 4795102097645412194}
-  - component: {fileID: 4795102097645412193}
-  - component: {fileID: 4795102097645412192}
   m_Layer: 0
   m_Name: Player_Sprite
   m_TagString: Player
@@ -411,67 +413,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4795102097645412193
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795102097645412199}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0041137934, y: -0.025619984}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.3, y: 4.2}
-  m_EdgeRadius: 0
---- !u!114 &4795102097645412192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795102097645412199}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07152e430aedc6c4aa1ad35b175e38d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _score: 0
-  _maxLives: 3
-  _currentLives: 0
-  _movementSpeed: 5
-  _leftDamagedEngine: {fileID: 0}
-  _rightDamagedEngine: {fileID: 0}
-  _exploPrefab: {fileID: 0}
-  _fireRate: 0.3
-  _laserPrefab: {fileID: 2877867293394251483, guid: 40c4d2442c547194cab397ce3336305e,
-    type: 3}
-  tripleShotLaserPrefab: {fileID: 8455815784241194389, guid: 7d1d41a7671e47e4f896a87b7c136077,
-    type: 3}
-  _laserOffset: {fileID: 4795102097382405451}
-  _audioClip: {fileID: 0}
-  _playerShieldVisualizer: {fileID: 4795102098121476257}
-  _isTripleShotActive: 0
-  _isShieldActive: 0
-  _tripleShotTimeActive: 5
-  _SpeedBoostTimeActive: 3
-  _speedMultiplier: 3.5
-  blinkRate: 0.2
-  numberofBlinks: 3
-  _playerSprite: {fileID: 0}
 --- !u!1 &4795102097768416650
 GameObject:
   m_ObjectHideFlags: 0

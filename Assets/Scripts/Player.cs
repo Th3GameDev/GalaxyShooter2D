@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     private int _currentLives;
 
     [SerializeField]
+    private int _shieldLevel;
+
+    [SerializeField]
     [Range(0f, 10f)]
     private float _movementSpeed = 5f;
 
@@ -57,6 +60,12 @@ public class Player : MonoBehaviour
     private GameObject _playerShieldVisualizer;
 
     [SerializeField]
+    private SpriteRenderer _shieldSpriteRend;
+
+    [SerializeField]
+    private Color _shieldColor;
+
+    [SerializeField]
     private bool _isTripleShotActive, _isShieldActive, _isSpeedBoostActive;
 
     [SerializeField]
@@ -76,13 +85,15 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _playerSprite;
-
+    
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAudioSource = GetComponent<AudioSource>();
+
+        _shieldColor = _shieldSpriteRend.color;
 
         if (_spawnManager == null)
         {
@@ -224,9 +235,26 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            _isShieldActive = false;
-            _playerShieldVisualizer.SetActive(false);
-            return;
+            _shieldLevel--;
+
+            if (_shieldLevel == 2)
+            {
+                _shieldColor.a = 0.5f;
+                _shieldSpriteRend.color = _shieldColor;
+                return;
+            }
+            else if (_shieldLevel == 1)
+            {
+                _shieldColor.a = 0.2f;
+                _shieldSpriteRend.color = _shieldColor;
+                return;
+            }
+            else if (_shieldLevel <= 0)
+            {
+                _isShieldActive = false;
+                _playerShieldVisualizer.SetActive(false);            
+                return;
+            }
         }
 
         _currentLives--;
@@ -302,6 +330,9 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
+        _shieldLevel = 3;
+        _shieldColor.a = 1.0f;
+        _shieldSpriteRend.color = _shieldColor;
         _isShieldActive = true;
         _playerShieldVisualizer.SetActive(true);
     }
