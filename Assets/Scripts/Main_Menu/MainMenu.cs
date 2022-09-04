@@ -13,9 +13,6 @@ public class MainMenu : MonoBehaviour
 
     private float _loadPercentage;
 
-    //[SerializeField]
-    //private TextMeshProUGUI _LoadingText;
-
     [SerializeField]
     private TextMeshProUGUI _percentText;
 
@@ -27,9 +24,6 @@ public class MainMenu : MonoBehaviour
     private Image crossfadeEffect;
 
     private Animator anim;
-
-    private bool isLoaded;
-
 
     [SerializeField]
     private Slider _loadingBar;
@@ -96,8 +90,7 @@ public class MainMenu : MonoBehaviour
                 _loadPercentage = _loadingBar.value += 10 * _loadSpeed * Time.deltaTime;
             }
             else if (_loadPercentage >= 100)
-            {
-                isLoaded = true;
+            {            
                 break;
             }
         }
@@ -112,13 +105,4 @@ public class MainMenu : MonoBehaviour
 
         SceneManager.LoadScene(1);
     }
-
-
-    /*
-    //Old Menu
-    public void LoadGame()
-    {
-        SceneManager.LoadSceneAsync(1);
-    }
-    */
 }

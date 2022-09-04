@@ -14,7 +14,7 @@ public class PowerUp : MonoBehaviour
     private float _speed;
 
     [SerializeField] //0 == TripleShot 1 == SpeedBoost 2 == Shield
-    [Range(0, 3)]
+    [Range(0, 4)]
     private int _powerUpID;
 
     [SerializeField]
@@ -68,6 +68,10 @@ public class PowerUp : MonoBehaviour
 
                     case 3:
                         player.ActivateRepair();
+                        break;
+
+                    case 4:
+                        player.ActivateReload();
                         break;
 
                     default:

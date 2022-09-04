@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     private float _bottomBarrier = -7f;
 
+    [SerializeField]
     private bool _canMove;
 
     [Header("Shooting Settings")]
@@ -29,15 +30,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Transform _barrelOffset;
 
-    private float _canFire = -1f;
-
-    //private bool _canFire;
+    [SerializeField]
+    private float _canFire = 1f;
 
     private Player _player;
 
-
-
-    //private bool animDonePlaying = false;
 
     /*
     public Vector3[] _positions;
@@ -92,10 +89,6 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Animator is Null");
         }
-
-        //float startXPos = Random.Range(-8f, 8f);
-
-        //transform.position = new Vector3(startXPos, 10f, 0f);      
     }
 
     // Update is called once per frame
@@ -104,15 +97,8 @@ public class Enemy : MonoBehaviour
         EnemyMovement();
 
         // Redo Enemy Fire //
-
-        if (Time.time > _canFire)
-        {
-            _fireRate = Random.Range(5f, 10f);
-
-            _canFire = Time.time + _fireRate;
-
-            Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);  
-        }
+       
+        EnemyFire();   
     }
     void EnemyMovement()
     {
@@ -121,11 +107,22 @@ public class Enemy : MonoBehaviour
             transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
         }
 
-
         if (transform.position.y <= _bottomBarrier)
         {
             float newXPos = Random.Range(-8f, 8f);
             transform.position = new Vector3(newXPos, 7f, 0f);
+        }
+    }
+
+    void EnemyFire()
+    {
+        if (Time.time > _canFire)
+        {
+            _fireRate = Random.Range(7f, 15f);
+
+            _canFire = Time.time + _fireRate;
+
+            Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
         }
     }
 

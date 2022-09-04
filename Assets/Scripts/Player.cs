@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -60,6 +61,18 @@ public class Player : MonoBehaviour
 
     private bool _canFire;
 
+    [Header("Thruster Settings")]
+    [SerializeField]
+    private GameObject _thruster;
+
+    [SerializeField]
+    private float _fuelPercentage = 100f;
+
+    [SerializeField]
+    private float _refuelSpeed;
+
+    private bool isThrusterActive;
+
     [Header("PowerUps Settings")]
 
     [SerializeField]
@@ -82,7 +95,7 @@ public class Player : MonoBehaviour
     [Range(0f, 5f)]
     private float _speedMultiplier = 3.5f;
 
-    [Header("TESTING")]
+    [Header("Damage Blink Settings")]
     [Range(0f, 5f)]
     public float blinkRate = 0.3f;
 
@@ -91,7 +104,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _playerSprite;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,7 +135,7 @@ public class Player : MonoBehaviour
 
         _player = transform;
 
-        _player.position = Vector3.zero;
+        _player.position = new Vector3(0, -2.5f, 0);
 
         _canFire = true;
     }
@@ -131,6 +144,20 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+
+        //Testing 
+        if (Input.GetKey(KeyCode.T))
+        {
+            //ActivateThruster();          
+            //ActivateReload();
+            //Damage();
+            //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
+        }
+        else if (Input.GetKeyUp(KeyCode.T))
+        {
+            //_thruster.SetActive(false);
+            //StartCoroutine(ActivateRefuel());
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && _canFire)
         {
@@ -158,21 +185,37 @@ public class Player : MonoBehaviour
 
         _player.position = new Vector3(_player.position.x, Mathf.Clamp(_player.position.y, -_boundaryY, _boundaryY), 0);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && _fuelPercentage > 0)
         {
-            if (_isSpeedBoostActive == false)
+            if (_isSpeedBoostActive)
             {
+                StopCoroutine(ActivateRefuel());
+                ActivateThruster();
+            }
+            else
+            {
+                StopCoroutine(ActivateRefuel());
+                ActivateThruster();
                 _movementSpeed = 6.5f;
             }
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            if (_isSpeedBoostActive == false)
+            isThrusterActive = false;
+
+            if (_isSpeedBoostActive)
             {
+                _thruster.SetActive(false);
+                StartCoroutine(ActivateRefuel());
+            }
+            else
+            {
+                _thruster.SetActive(false);
+                StartCoroutine(ActivateRefuel());
                 _movementSpeed = 5f;
             }
-        } 
-        
+        }
+
 
         /*
         if (_player.position.y >= _boundaryY)
@@ -186,14 +229,6 @@ public class Player : MonoBehaviour
             _player.position = new Vector3(_player.position.x, -_boundaryY, 0);
         }
         */
-
-        //Testing 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ActivateReload();
-            //Damage();
-            //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
-        }
     }
 
     void Shoot()
@@ -268,7 +303,7 @@ public class Player : MonoBehaviour
             else if (_shieldLevel <= 0)
             {
                 _isShieldActive = false;
-                _playerShieldVisualizer.SetActive(false);            
+                _playerShieldVisualizer.SetActive(false);
                 return;
             }
         }
@@ -312,6 +347,47 @@ public class Player : MonoBehaviour
         if (_uiManager != null)
         {
             _uiManager.UpdateScore(_score);
+        }
+    }
+
+    void ActivateThruster()
+    {
+        _fuelPercentage = Mathf.Clamp(_fuelPercentage, 0, 100);
+
+        isThrusterActive = true;
+
+        if (_fuelPercentage > 0)
+        {
+            _thruster.SetActive(true);
+            _fuelPercentage -= 15 * 2 * Time.deltaTime;
+            _uiManager.UpdateThruster(_fuelPercentage);
+        }
+        else if (_fuelPercentage <= 0)
+        {
+            _thruster.SetActive(false);
+            _fuelPercentage = 0f;
+            _uiManager.UpdateThruster(_fuelPercentage);
+        }
+    }
+
+    IEnumerator ActivateRefuel()
+    {
+        while (_fuelPercentage != 100 && isThrusterActive == false)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            _fuelPercentage += 30 * _refuelSpeed * Time.deltaTime;
+
+            _uiManager.UpdateThruster(_fuelPercentage);
+
+            if (_fuelPercentage >= 100)
+            {
+                _fuelPercentage = 100;
+
+                _uiManager.UpdateThruster(_fuelPercentage);
+
+                break;
+            }
         }
     }
 

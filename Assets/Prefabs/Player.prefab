@@ -81,6 +81,8 @@ MonoBehaviour:
   _rightDamagedEngine: {fileID: 4795102097768416650}
   _exploPrefab: {fileID: 4922835023454153079, guid: 7a5543f0b2d4d5f4b95a5226f4886343,
     type: 3}
+  _maxAmmo: 15
+  _currentAmmo: 0
   _fireRate: 0.3
   _laserPrefab: {fileID: 2877867293394251483, guid: 40c4d2442c547194cab397ce3336305e,
     type: 3}
@@ -88,6 +90,9 @@ MonoBehaviour:
     type: 3}
   _laserOffset: {fileID: 4795102097382405451}
   _audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _thruster: {fileID: 4795102098477377129}
+  _fuelPercentage: 100
+  _refuelSpeed: 1.5
   _playerShieldVisualizer: {fileID: 4795102098121476257}
   _shieldSpriteRend: {fileID: 4795102098121476268}
   _shieldColor: {r: 1, g: 1, b: 1, a: 1}
@@ -649,7 +654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4795102098477377428
 Transform:
   m_ObjectHideFlags: 0

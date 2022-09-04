@@ -8,6 +8,14 @@ public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
 
+
+    [Header("Thruster UI")]
+    [SerializeField]
+    private Slider _thrusterSlider;
+
+    [SerializeField]
+    private TextMeshProUGUI _fuelPercentageText;
+
     [Header("Score UI")]
     [SerializeField]
     private TextMeshProUGUI _scoreText;
@@ -55,6 +63,13 @@ public class UIManager : MonoBehaviour
 
         _ammoCountText.text = "Ammo:" + 15;
     }
+
+    public void UpdateThruster(float fuelPercentage)
+    {
+        _thrusterSlider.value = fuelPercentage;
+        _fuelPercentageText.text = Mathf.RoundToInt(fuelPercentage) + "%";
+    }
+
     public void UpdateAmmoCount(int playerAmmo)
     {  
         _ammoCountText.text = $"Ammo:{playerAmmo}";
