@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     private float _bottomBarrier = -7f;
 
     [SerializeField]
-    private bool _canMove;
+    private bool _canMove = true;
 
     [Header("Shooting Settings")]
     [SerializeField]
@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     private float _canFire = 1f;
 
     private Player _player;
+
+    [SerializeField]
+    private bool _canShoot;
 
 
     /*
@@ -77,8 +80,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _canMove = true;
-
         _audioSource = gameObject.GetComponent<AudioSource>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -97,8 +98,10 @@ public class Enemy : MonoBehaviour
         EnemyMovement();
 
         // Redo Enemy Fire //
-       
-        EnemyFire();   
+        if (_canShoot)
+        {
+            EnemyFire();
+        }
     }
     void EnemyMovement()
     {

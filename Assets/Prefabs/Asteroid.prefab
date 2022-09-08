@@ -182,6 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fde3132438c4cc42a159ec47d2af1c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exploPrefab: {fileID: 4922835023454153079, guid: 7a5543f0b2d4d5f4b95a5226f4886343,
+  _exploPrefab: {fileID: 4922835023454153079, guid: 7a5543f0b2d4d5f4b95a5226f4886343,
     type: 3}
-  rotSpeed: 20
+  _rotSpeed: 20

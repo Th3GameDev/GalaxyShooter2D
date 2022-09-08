@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.2f;
 
     [SerializeField]
-    private GameObject _laserPrefab, tripleShotLaserPrefab;
+    private GameObject _laserPrefab, _tripleShotLaserPrefab, _guidedLaserPrefab;
 
     [SerializeField]
     private Transform _laserOffset;
@@ -76,6 +76,14 @@ public class Player : MonoBehaviour
     [Header("PowerUps Settings")]
 
     [SerializeField]
+    private GuidedLaserRadius _laserRadius;
+
+    [SerializeField]
+    private int _guidedAmmoMax = 3;
+
+    private int _guidedCurrentAmmo;
+
+    [SerializeField]
     private GameObject _playerShieldVisualizer;
 
     [SerializeField]
@@ -85,11 +93,11 @@ public class Player : MonoBehaviour
     private Color _shieldColor;
 
     [SerializeField]
-    private bool _isTripleShotActive, _isShieldActive, _isSpeedBoostActive;
+    private bool _isTripleShotActive, _isShieldActive, _isSpeedBoostActive, _isGuidedLaserActive;
 
     [SerializeField]
     [Range(0f, 5f)]
-    private float _tripleShotTimeActive = 5f, _SpeedBoostTimeActive = 5f;
+    private float _tripleShotTimeActive = 5f, _SpeedBoostTimeActive = 5f, _guidedLaserTimeActive = 5f;
 
     [SerializeField]
     [Range(0f, 5f)]
@@ -105,6 +113,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _playerSprite;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,6 +122,7 @@ public class Player : MonoBehaviour
         _playerAudioSource = GetComponent<AudioSource>();
 
         _currentAmmo = _maxAmmo;
+        _guidedCurrentAmmo = _guidedAmmoMax;
 
         _shieldColor = _shieldSpriteRend.color;
 
@@ -145,18 +155,19 @@ public class Player : MonoBehaviour
     {
         Movement();
 
-        //Testing 
-        if (Input.GetKey(KeyCode.T))
+        if (_guidedCurrentAmmo <= 0)
         {
+            _guidedCurrentAmmo = 0;
+        }
+
+        //Testing 
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            //ActivateGuidedLaser();
             //ActivateThruster();          
             //ActivateReload();
             //Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
-        }
-        else if (Input.GetKeyUp(KeyCode.T))
-        {
-            //_thruster.SetActive(false);
-            //StartCoroutine(ActivateRefuel());
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _canFire)
@@ -233,22 +244,26 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        if (_currentAmmo >= 1)
-        {
-            _currentAmmo--;
-        }
-
-        _uiManager.UpdateAmmoCount(_currentAmmo);
-
         if (_isTripleShotActive)
         {
             _fireRate = 0.5f;
-            Instantiate(tripleShotLaserPrefab, transform.position, Quaternion.identity);
+            Instantiate(_tripleShotLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
         }
-        else if (_currentAmmo > 0)
+        else if (_isGuidedLaserActive == true && _guidedCurrentAmmo > 0 && _laserRadius.inRadius == true)
         {
+            _guidedCurrentAmmo--;
+            _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);
+            _fireRate = 0.5f;
+            Instantiate(_guidedLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
+            _canFire = false;
+            StartCoroutine(LaserCoolDownTimer());
+        }
+        else if (_currentAmmo > 0 && _isGuidedLaserActive == false)
+        {
+            _currentAmmo--;
+            _uiManager.UpdateAmmoCount(_currentAmmo);
             _fireRate = 0.3f;
             Instantiate(_laserPrefab, _laserOffset.position, Quaternion.identity);
             _canFire = false;
@@ -419,11 +434,19 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerUpTimer());
     }
 
+    public void ActivateGuidedLaser()
+    {
+        _isGuidedLaserActive = true;
+        _guidedCurrentAmmo = _guidedAmmoMax;
+        _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);
+        StartCoroutine(GuidedLaserPowerUpTimer());
+    }
+
     public void ActivateSpeedBoost()
     {
         _isSpeedBoostActive = true;
         _movementSpeed = 5f + _speedMultiplier;
-        StartCoroutine(SpeedBoostTimer());
+        StartCoroutine(SpeedBoostPowerUpTimer());
     }
 
     public void ActivateShield()
@@ -441,11 +464,19 @@ public class Player : MonoBehaviour
         _isTripleShotActive = false;
     }
 
-    IEnumerator SpeedBoostTimer()
+    IEnumerator SpeedBoostPowerUpTimer()
     {
         yield return new WaitForSeconds(_SpeedBoostTimeActive);
         _movementSpeed = 5f;
         _isSpeedBoostActive = false;
     }
 
+    IEnumerator GuidedLaserPowerUpTimer()
+    {
+        yield return new WaitForSeconds(_guidedLaserTimeActive);
+        _isGuidedLaserActive = false;
+        _uiManager.UpdateAmmoCount(_currentAmmo);
+        
+        
+    }
 }
