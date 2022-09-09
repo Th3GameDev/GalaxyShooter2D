@@ -76,7 +76,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(randomTime);
 
-            int randomPowerUpID = Random.Range(0, 5);
+            int randomPowerUpID = Random.Range(0, 6);
             GameObject newPowerUp = Instantiate(_powerUpPrefabs[randomPowerUpID], RandomPos(), Quaternion.identity);
             newPowerUp.transform.parent = _powerUpContainer.transform;
         }

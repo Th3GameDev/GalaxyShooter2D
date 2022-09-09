@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
+    private CameraShake _camShake;
+
     [SerializeField]
     private int _score;
 
@@ -97,7 +99,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     [Range(0f, 5f)]
-    private float _tripleShotTimeActive = 5f, _SpeedBoostTimeActive = 5f, _guidedLaserTimeActive = 5f;
+    private float _tripleShotTimeActive = 5f, _SpeedBoostTimeActive = 5f, _guidedLaserTimeActive = 10f;
 
     [SerializeField]
     [Range(0f, 5f)]
@@ -120,11 +122,17 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAudioSource = GetComponent<AudioSource>();
+        _camShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
 
         _currentAmmo = _maxAmmo;
         _guidedCurrentAmmo = _guidedAmmoMax;
 
         _shieldColor = _shieldSpriteRend.color;
+
+        if (_camShake == null)
+        {
+            Debug.LogError("Main Camera - CameraShake Script is Null.");
+        }
 
         if (_spawnManager == null)
         {
@@ -155,18 +163,13 @@ public class Player : MonoBehaviour
     {
         Movement();
 
-        if (_guidedCurrentAmmo <= 0)
-        {
-            _guidedCurrentAmmo = 0;
-        }
-
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
             //ActivateGuidedLaser();
             //ActivateThruster();          
             //ActivateReload();
-            //Damage();
+            Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
 
@@ -255,7 +258,7 @@ public class Player : MonoBehaviour
         {
             _guidedCurrentAmmo--;
             _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);
-            _fireRate = 0.5f;
+            _fireRate = 1.2f;
             Instantiate(_guidedLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
@@ -328,12 +331,14 @@ public class Player : MonoBehaviour
         if (_currentLives == 2)
         {
             _rightDamagedEngine.SetActive(true);
+            _camShake.ShakeCamera();
             //_playerAudioSource.clip = _audioClips[1];
             //_playerAudioSource.Play();
         }
         else if (_currentLives == 1)
         {
             _leftDamagedEngine.SetActive(true);
+            _camShake.ShakeCamera();
             //_playerAudioSource.clip = _audioClips[1];
             //_playerAudioSource.Play();
         }

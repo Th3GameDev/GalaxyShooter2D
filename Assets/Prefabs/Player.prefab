@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07152e430aedc6c4aa1ad35b175e38d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camShake: {fileID: 0}
   _score: 0
   _maxLives: 3
   _currentLives: 0
@@ -760,7 +761,7 @@ PrefabInstance:
     - target: {fileID: 2937267529746149081, guid: c1905a64214327540bb9dcb126d863a4,
         type: 3}
       propertyPath: m_Size.y
-      value: 5.1842012
+      value: 7.466407
       objectReference: {fileID: 0}
     - target: {fileID: 2937267529746149081, guid: c1905a64214327540bb9dcb126d863a4,
         type: 3}
@@ -770,7 +771,7 @@ PrefabInstance:
     - target: {fileID: 2937267529746149081, guid: c1905a64214327540bb9dcb126d863a4,
         type: 3}
       propertyPath: m_Offset.y
-      value: 2.0921006
+      value: 0.9509978
       objectReference: {fileID: 0}
     - target: {fileID: 2937267529746149082, guid: c1905a64214327540bb9dcb126d863a4,
         type: 3}

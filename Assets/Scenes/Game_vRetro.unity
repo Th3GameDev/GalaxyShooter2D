@@ -1243,8 +1243,9 @@ GameObject:
   - component: {fileID: 967358329}
   - component: {fileID: 967358328}
   - component: {fileID: 967358327}
-  - component: {fileID: 967358332}
   - component: {fileID: 967358331}
+  - component: {fileID: 967358332}
+  - component: {fileID: 967358330}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1317,6 +1318,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &967358330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967358326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97cb8a8fecd816c4f84eaf1fcb41e055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camShakeTime: 1
+  _cameraShakeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0015029907
+      value: -0.0023498535
+      inSlope: 0.71286994
+      outSlope: 0.71286994
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21504168
+    - serializedVersion: 3
+      time: 0.9984741
+      value: -0.009433746
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &967358331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2875,6 +2913,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6538316132357547132, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: _camShake
+      value: 
+      objectReference: {fileID: 967358330}
     - target: {fileID: 6538316132357547133, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}
       propertyPath: m_RootOrder
