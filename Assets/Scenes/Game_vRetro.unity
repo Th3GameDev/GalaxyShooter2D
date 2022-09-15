@@ -1789,8 +1789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16995ebf1a58f8e45bdb9c4300eecad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 2971257347489358889, guid: 266e414de471ed548bf0f480a6170005,
-    type: 3}
+  _enemyPrefabs:
+  - {fileID: 2971257347489358889, guid: 266e414de471ed548bf0f480a6170005, type: 3}
+  - {fileID: 7767294297209188708, guid: cab23d14a953c1f42a87502547b694c5, type: 3}
   _enemyContainer: {fileID: 1637521648}
   _powerUpPrefabs:
   - {fileID: 6887113265765559422, guid: 43fbdc1dc7533b441a396a53e1b06503, type: 3}
@@ -2912,6 +2913,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538316132357547130, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538316132357547131, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6538316132357547132, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}

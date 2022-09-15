@@ -8,9 +8,13 @@ public class Enemy : MonoBehaviour
 
     private AudioSource _audioSource;
 
+    [SerializeField]        // 0 = Basic Enemy / 1 = DodgingEnemy
+    private int _enemyID;
+
     [SerializeField]
     private AudioClip _exploAudioClip;
 
+    [Header("Movement Settings")]
     [SerializeField]
     [Range(0f, 5f)]
     private float _movementSpeed = 4f;
@@ -18,7 +22,21 @@ public class Enemy : MonoBehaviour
     private float _bottomBarrier = -7f;
 
     [SerializeField]
+    private float _dodgeSpeed, _dodgeWaitTime;
+
+    private float _newDodgeXPos;
+
+    [SerializeField]
     private bool _canMove = true;
+
+    [SerializeField]
+    private bool _canDodge = false;
+
+    private bool _dodge;
+
+    private Vector2 _startWait = new Vector2(0.5f, 1f);
+
+    private Vector3 _velocity;
 
     [Header("Shooting Settings")]
     [SerializeField]
@@ -39,44 +57,6 @@ public class Enemy : MonoBehaviour
     private bool _canShoot;
 
 
-    /*
-    public Vector3[] _positions;
-    private int _positionSelector;
-    private int _lastSelectedEnemy;
-    private int _initialSpawnPositionCount = 1;
-    Vector3 posTemp;
-    Vector3 _lastPos;
-    */
-
-    /*
-    private void Awake()
-    {
-        _positionSelector = Random.Range(0, _positions.Length + 1);
-
-        for (int i = 0; i < _initialSpawnPositionCount; i++)
-        {
-            if (_positionSelector == _lastSelectedEnemy)
-            {
-                while (_positionSelector == _lastSelectedEnemy)
-                {
-                    _positionSelector = Random.Range(0, _positions.Length);
-                }
-            }
-
-            _lastSelectedEnemy = _positionSelector;
-
-            Vector3 _pos = _positions[_positionSelector]; //Instantiate(_roadPrefabs[_roadSelector], i * _roadOffset, transform.rotation);
-
-            _lastPos = _pos;
-
-            Debug.Log(_pos);
-
-            transform.position = _pos;
-
-            //canSpawnRoad = false;
-        }
-    }
-    */
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +70,12 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Animator is Null");
         }
+
+        if (_enemyID == 1)
+        {
+            _canDodge = true;
+            StartCoroutine(Dodge());
+        }
     }
 
     // Update is called once per frame
@@ -102,6 +88,9 @@ public class Enemy : MonoBehaviour
         {
             EnemyFire();
         }
+
+        //Clamp X Axis
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8, 8), transform.position.y, 0);
     }
     void EnemyMovement()
     {
@@ -110,12 +99,40 @@ public class Enemy : MonoBehaviour
             transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
         }
 
-        if (transform.position.y <= _bottomBarrier)
+        if (_enemyID == 0)
         {
-            float newXPos = Random.Range(-8f, 8f);
-            transform.position = new Vector3(newXPos, 7f, 0f);
+            if (transform.position.y <= _bottomBarrier)
+            {
+                float newXPos = Random.Range(-8f, 8f);
+                transform.position = new Vector3(newXPos, 7f, 0f);
+            }
+        }
+        else if (_enemyID == 1)
+        {
+
+            if (_canDodge)
+            {
+                float newXPos = Mathf.MoveTowards(transform.position.x, _newDodgeXPos, _dodgeSpeed * Time.deltaTime);
+
+                transform.position = new Vector3(newXPos, transform.position.y, transform.position.z);
+            }
+
+            if (transform.position.y > -3 && transform.position.y < 3.7f)
+            {
+                _dodge = true;
+            }
+            else
+            {
+                _dodge = false;
+            }
+
+            if (transform.position.y <= _bottomBarrier)
+            {
+                transform.position = new Vector3(transform.position.x, 7f, 0f);
+            }
         }
     }
+
 
     void EnemyFire()
     {
@@ -126,6 +143,23 @@ public class Enemy : MonoBehaviour
             _canFire = Time.time + _fireRate;
 
             Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
+        }
+    }
+
+    IEnumerator Dodge()
+    {
+        yield return new WaitForSeconds(Random.Range(_startWait.x, _startWait.y));
+
+        while (true)
+        {
+            if (_dodge)
+            {
+                _newDodgeXPos = Random.Range(-8, 8) * -Mathf.Sign(transform.position.x);
+                //Debug.Log("Dodge Pos = " + _newDodge);
+                yield return new WaitForSeconds(_dodgeWaitTime);
+            }
+
+            yield return new WaitForSeconds(.5f);
         }
     }
 
