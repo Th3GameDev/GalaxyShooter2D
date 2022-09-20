@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private WaveManager _waveManager;
+
     private Animator _anim;
 
     private AudioSource _audioSource;
@@ -36,8 +38,6 @@ public class Enemy : MonoBehaviour
 
     private Vector2 _startWait = new Vector2(0.5f, 1f);
 
-    private Vector3 _velocity;
-
     [Header("Shooting Settings")]
     [SerializeField]
     private float _fireRate = 0.3f;
@@ -60,7 +60,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _audioSource = gameObject.GetComponent<AudioSource>();
+        _waveManager = GameObject.Find("SpawnManager").GetComponent<WaveManager>();
+
+        if (_waveManager == null)
+        {
+            Debug.LogError("Wave Manager is Null!");
+        }
+
+            _audioSource = gameObject.GetComponent<AudioSource>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
@@ -68,7 +75,7 @@ public class Enemy : MonoBehaviour
 
         if (_anim == null)
         {
-            Debug.LogWarning("Animator is Null");
+            Debug.LogWarning("Animator is Null!");
         }
 
         if (_enemyID == 1)
@@ -167,10 +174,13 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            _waveManager.enemiesLeft--;
 
             this.gameObject.GetComponent<Collider2D>().enabled = false;
 
             _movementSpeed = 0;
+            _dodgeSpeed = 0;
+            _canShoot = false;
 
             _anim.SetTrigger("OnDestroy");
             _audioSource.clip = _exploAudioClip;
@@ -186,9 +196,13 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "PlayerLaser")
         {
+            _waveManager.enemiesLeft--;
+
             this.gameObject.GetComponent<Collider2D>().enabled = false;
 
             _movementSpeed = 0f;
+            _dodgeSpeed = 0;
+            _canShoot = false;
 
             _anim.SetTrigger("OnDestroy");
 

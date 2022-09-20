@@ -166,10 +166,10 @@ public class Player : MonoBehaviour
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
-            //ActivateGuidedLaser();
+            ActivateGuidedLaser();
             //ActivateThruster();          
             //ActivateReload();
-            Damage();
+            //Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
 

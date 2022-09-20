@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    private WaveManager _waveManager;
+
     [Header("Enemy Spawning")]
+    [SerializeField]
+    private GameObject _enemyContainer;
+
     [SerializeField]
     private GameObject[] _enemyPrefabs;
 
-    [SerializeField]
-    private GameObject _enemyContainer;
 
     [Header("PowerUp Spawning")]
     [SerializeField]
@@ -18,56 +21,87 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _powerUpContainer;
 
+    [SerializeField]
     private bool _stopSpawning = false;
-
 
     [Header("Testing")]
     public Vector3[] _positions;
     private int _positionSelector;
     private int _lastSelectedPosition;
     private int _initialSpawnPositionCount = 9;
-    //Vector3 posTemp;
     private Vector3 _lastPos;
-
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _waveManager = GetComponent<WaveManager>();
     }
 
     public void StartSpawning()
     {
+        _stopSpawning = false;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
+    }
+
+    public void StopSpawning()
+    {
+        _stopSpawning = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Pos selected is" + RandomPos());
+
     }
 
     IEnumerator SpawnEnemyRoutine()
     {
-        //Vector3 randomPos = new Vector3(Random.Range(-8f, 8f), 7f, 0f);
+
+        int enemiesSpawned = 0;
 
         yield return new WaitForSeconds(3.0f);
 
-        while (_stopSpawning == false)
+        while (_stopSpawning != true)
         {
-            int randomEnemyID = Random.Range(0, 2);
-            GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemyID], RandomPos(), Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5f);
+            if (enemiesSpawned != _waveManager.enemiesToSpawn)
+            {
+                if (_waveManager.currentWave < 5)
+                {
+                    GameObject newEnemy = Instantiate(_enemyPrefabs[0], RandomPos(), Quaternion.identity); //Spawning Enemy Here
+
+                    newEnemy.transform.parent = _enemyContainer.transform;
+
+                    _waveManager.enemiesLeft++;
+                    enemiesSpawned++;
+
+                }
+                else if (_waveManager.currentWave >= 5)
+                {
+                    int randomEnemyID = Random.Range(0, 2); //Used for spawning random enemy from array
+
+                    GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemyID], RandomPos(), Quaternion.identity); //Spawning Enemy Here
+
+                    newEnemy.transform.parent = _enemyContainer.transform;
+
+                    _waveManager.enemiesLeft++;
+                    enemiesSpawned++;
+                }
+            }
+            else
+            {
+                _waveManager.startOfWave = false;
+                enemiesSpawned = 0;
+                StopSpawning();
+            }
+
+            yield return new WaitForSeconds(3f);
         }
     }
 
     IEnumerator SpawnPowerUpRoutine()
     {
-        //float randomTime = Random.Range(10f, 20f);
-
         yield return new WaitForSeconds(.5f);
 
         float randomTime = Random.Range(3f, 10f);
@@ -81,11 +115,6 @@ public class SpawnManager : MonoBehaviour
             GameObject newPowerUp = Instantiate(_powerUpPrefabs[randomPowerUpID], RandomPos(), Quaternion.identity);
             newPowerUp.transform.parent = _powerUpContainer.transform;
         }
-    }
-
-    public void StopSpawning()
-    {
-        _stopSpawning = true;
     }
 
     Vector3 RandomPos()

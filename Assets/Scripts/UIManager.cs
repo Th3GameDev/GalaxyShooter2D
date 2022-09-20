@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
 
+    [Header("Wave UI")]
+    [SerializeField]
+    private TextMeshProUGUI _waveCounter;
 
     [Header("Thruster UI")]
     [SerializeField]
@@ -64,6 +67,13 @@ public class UIManager : MonoBehaviour
         _ammoCountText.text = "Ammo:" + 15;
     }
 
+    public void UpdateWaveStartDisplay(int currentWave)
+    {
+        _waveCounter.gameObject.SetActive(true);
+        _waveCounter.text = "Wave:" + currentWave;
+        StartCoroutine(BlinkGameObject(_waveCounter.gameObject, 2, .7f, false));
+    }
+
     public void UpdateThruster(float fuelPercentage)
     {
         _thrusterSlider.value = fuelPercentage;
@@ -98,10 +108,10 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(true);
         _restartLevelText.gameObject.SetActive(true);
 
-        StartCoroutine(BlinkGameObject(_gameOverText.gameObject, _gameOverNumberOfBlinks, _gameOverTextBlinkTime));
+        StartCoroutine(BlinkGameObject(_gameOverText.gameObject, _gameOverNumberOfBlinks, _gameOverTextBlinkTime, true));
     }
 
-    public IEnumerator BlinkGameObject(GameObject gameObjectOne, int numBlinks, float seconds) 
+    public IEnumerator BlinkGameObject(GameObject gameObjectOne, int numBlinks, float seconds, bool diactivateOnExit) 
     {      
         TextMeshProUGUI text = gameObjectOne.GetComponent<TextMeshProUGUI>();
       
@@ -113,7 +123,14 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(seconds);
         }
 
-        //make sure Text is enabled when we exit
-        text.enabled = true;
+        if (diactivateOnExit)
+        {
+            //make sure Text is enabled when we exit
+            text.enabled = true;
+        }
+        else
+        {
+            text.enabled = false;
+        }
     }
 }
