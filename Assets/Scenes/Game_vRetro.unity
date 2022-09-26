@@ -1803,6 +1803,7 @@ MonoBehaviour:
   - {fileID: 1352107711306666741, guid: 1f6fad0a093f37d4990e4e83da419a75, type: 3}
   - {fileID: 1491002477960467326, guid: d93a7320f093bdf4f8bc5cccf1bbebb9, type: 3}
   - {fileID: 5241413084761383795, guid: 5bd8cd37f7d11b04aaf25e7aecbcede4, type: 3}
+  - {fileID: 8154027414313650712, guid: 6676f52a065577e4a95cb366b1d9ba31, type: 3}
   _powerUpContainer: {fileID: 1919032780}
   _stopSpawning: 0
   _positions:

@@ -14,7 +14,7 @@ public class PowerUp : MonoBehaviour
     private float _speed;
 
     [SerializeField] //0 == TripleShot 1 == SpeedBoost 2 == Shield
-    [Range(0, 5)]
+    [Range(0, 6)]
     private int _powerUpID;
 
     [SerializeField]
@@ -23,7 +23,7 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
@@ -76,6 +76,10 @@ public class PowerUp : MonoBehaviour
 
                     case 5:
                         player.ActivateGuidedLaser();
+                        break;
+
+                    case 6:
+                        player.Damage();
                         break;
 
                     default:

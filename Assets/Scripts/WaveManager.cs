@@ -39,7 +39,7 @@ public class WaveManager : MonoBehaviour
 
     public void StartWave()
     {
-        startOfWave = true;
+       startOfWave = true;
        StartCoroutine(StartWaveRoutine());  
     }
 
