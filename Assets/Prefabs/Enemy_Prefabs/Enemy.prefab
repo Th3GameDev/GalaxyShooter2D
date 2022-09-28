@@ -176,11 +176,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3575509763056342a6a4944202985d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyID: 0
   _exploAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _movementSpeed: 4
+  _dodgeSpeed: 0
+  _dodgeWaitTime: 0
   _canMove: 1
+  _canDodge: 0
   _fireRate: 0.3
   _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
+    type: 3}
+  _guidedLaserPrefab: {fileID: 6271032827119719171, guid: 56d0acc60204e3245a07c81fc18862b2,
     type: 3}
   _barrelOffset: {fileID: 6328786189543673847}
   _canFire: -1

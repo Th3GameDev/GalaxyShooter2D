@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _guidedLaserPrefab;
 
     [SerializeField]
     private Transform _barrelOffset;
@@ -55,6 +57,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private bool _canShoot;
+
+    [SerializeField]
+    private bool _guidedLaser;
 
 
     // Start is called before the first frame update
@@ -145,11 +150,22 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time > _canFire)
         {
-            _fireRate = Random.Range(7f, 15f);
+            if (_guidedLaser)
+            {
+                _fireRate = Random.Range(7f, 15f);
 
-            _canFire = Time.time + _fireRate;
+                _canFire = Time.time + _fireRate;
 
-            Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
+                Instantiate(_guidedLaserPrefab, _barrelOffset.position, Quaternion.identity);
+            }
+            else
+            {
+                _fireRate = Random.Range(7f, 15f);
+
+                _canFire = Time.time + _fireRate;
+
+                Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
+            }
         }
     }
 

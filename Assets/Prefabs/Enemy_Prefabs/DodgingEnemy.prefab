@@ -186,9 +186,12 @@ MonoBehaviour:
   _fireRate: 5
   _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
     type: 3}
+  _guidedLaserPrefab: {fileID: 6271032827119719171, guid: 56d0acc60204e3245a07c81fc18862b2,
+    type: 3}
   _barrelOffset: {fileID: 1522958088643762874}
   _canFire: -1
   _canShoot: 1
+  _guidedLaser: 1
 --- !u!95 &2285178128487677987
 Animator:
   serializedVersion: 3
