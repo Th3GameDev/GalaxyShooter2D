@@ -352,6 +352,7 @@ public class Player : MonoBehaviour
             if (_spawnManager != null)
             {
                 _spawnManager.StopSpawning();
+                _spawnManager.stopSpawningPowerUp = true;
             }
 
             Instantiate(_exploPrefab, gameObject.transform.position, Quaternion.identity);

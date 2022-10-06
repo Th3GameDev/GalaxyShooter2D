@@ -27,6 +27,10 @@ public class GuidedLaser : MonoBehaviour
             {
                 Debug.Log("Player Script is Null!!");
             }
+            
+            target = _player.transform;
+
+            Destroy(this.gameObject, 3f);
         }
         else
         {
@@ -40,7 +44,7 @@ public class GuidedLaser : MonoBehaviour
 
         if (_isEnemyLaser)
         {
-            target = _player.transform;
+            //target = _player.transform;
 
             if (target != null)
             {

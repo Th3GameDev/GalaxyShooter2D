@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     private Transform _barrelOffset;
 
     [SerializeField]
-    private float _canFire = 1f;
+    private float _canFire = 2f;
 
     private Player _player;
 
@@ -60,6 +60,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private bool _guidedLaser;
+
+    private bool _firstPass = true;
 
 
     // Start is called before the first frame update
@@ -72,7 +74,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Wave Manager is Null!");
         }
 
-            _audioSource = gameObject.GetComponent<AudioSource>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
@@ -95,7 +97,6 @@ public class Enemy : MonoBehaviour
     {
         EnemyMovement();
 
-        // Redo Enemy Fire //
         if (_canShoot)
         {
             EnemyFire();
@@ -117,6 +118,7 @@ public class Enemy : MonoBehaviour
             {
                 float newXPos = Random.Range(-8f, 8f);
                 transform.position = new Vector3(newXPos, 7f, 0f);
+                _firstPass = false;
             }
         }
         else if (_enemyID == 1)
@@ -129,7 +131,7 @@ public class Enemy : MonoBehaviour
                 transform.position = new Vector3(newXPos, transform.position.y, transform.position.z);
             }
 
-            if (transform.position.y > -3 && transform.position.y < 3.7f)
+            if (transform.position.y > -3 && transform.position.y < 4f)
             {
                 _dodge = true;
             }
@@ -141,6 +143,7 @@ public class Enemy : MonoBehaviour
             if (transform.position.y <= _bottomBarrier)
             {
                 transform.position = new Vector3(transform.position.x, 7f, 0f);
+                _firstPass = false;
             }
         }
     }
@@ -148,6 +151,19 @@ public class Enemy : MonoBehaviour
 
     void EnemyFire()
     {
+        if (_guidedLaser && _firstPass == false)
+        {
+            _canShoot = false;
+            Instantiate(_guidedLaserPrefab, _barrelOffset.position, Quaternion.identity);
+            StartCoroutine(EnemyFireCoolDown());
+        }
+        else if (_firstPass == false)
+        {
+            _canShoot = false;
+            Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
+            StartCoroutine(EnemyFireCoolDown());
+        }
+        /*
         if (Time.time > _canFire)
         {
             if (_guidedLaser)
@@ -165,6 +181,52 @@ public class Enemy : MonoBehaviour
                 _canFire = Time.time + _fireRate;
 
                 Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
+            }
+        }
+        */
+    }
+
+    IEnumerator EnemyFireCoolDown()
+    {
+        if (_guidedLaser)
+        {
+            if (_firstPass)
+            {
+                _fireRate = Random.Range(1.5f, 2f);
+
+                yield return new WaitForSeconds(_fireRate);
+
+                _canShoot = true;
+            }
+            else
+            {
+
+                _fireRate = Random.Range(10f, 15f);
+
+                yield return new WaitForSeconds(_fireRate);
+
+                _canShoot = true;
+            }
+        }
+        else
+        {
+
+            if (_firstPass)
+            {
+                _fireRate = Random.Range(1f, 1.5f);
+
+                yield return new WaitForSeconds(_fireRate);
+
+                _canShoot = true;
+
+            }
+            else
+            {
+                _fireRate = Random.Range(2f, 5f);
+
+                yield return new WaitForSeconds(_fireRate);
+
+                _canShoot = true;
             }
         }
     }

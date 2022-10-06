@@ -62,6 +62,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator EndWaveRoutine()
     {
+        _spawnManager.stopSpawningPowerUp = true;
         startOfWave = true;
         currentWave++;
         enemiesToSpawn += 5;

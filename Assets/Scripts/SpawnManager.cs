@@ -24,12 +24,25 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private bool _stopSpawning = false;
 
+
+    public bool stopSpawningPowerUp = false;
+
+
+    [SerializeField]
+    private int[] _powerUpTable = { 50, 30, 25, 20, 15, 10, 5 };
+
+    [SerializeField]
+    private int _powerUpTableTotal;
+
     [Header("Testing")]
     public Vector3[] _positions;
     private int _positionSelector;
     private int _lastSelectedPosition;
     private int _initialSpawnPositionCount = 9;
     private Vector3 _lastPos;
+
+
+    public GameObject _selectedPowerUp;
 
 
     // Start is called before the first frame update
@@ -41,6 +54,8 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         _stopSpawning = false;
+        stopSpawningPowerUp = false;
+
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
     }
@@ -104,16 +119,62 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        float randomTime = Random.Range(3f, 10f);
+        float randomTime = Random.Range(10f, 15f);
 
 
-        while (_stopSpawning == false)
+        while (stopSpawningPowerUp == false)
         {
-            yield return new WaitForSeconds(randomTime);
+            yield return new WaitForSeconds(randomTime);        
 
-            int randomPowerUpID = Random.Range(0, 7);
-            GameObject newPowerUp = Instantiate(_powerUpPrefabs[randomPowerUpID], RandomPos(), Quaternion.identity);
-            newPowerUp.transform.parent = _powerUpContainer.transform;
+            SelectPowerUp();
+
+            if (_selectedPowerUp != null)
+            {
+                GameObject newPowerUp = Instantiate(_selectedPowerUp, RandomPos(), Quaternion.identity);
+
+                newPowerUp.transform.parent = _powerUpContainer.transform;
+            }
+        }
+    }
+
+    void SelectPowerUp()
+    {
+        int a = 0;
+
+        _powerUpTableTotal = 0;
+
+        foreach (var powerUp in _powerUpTable)
+        {
+            _powerUpTableTotal += powerUp;
+        }
+
+        int randomNum = Random.Range(0, _powerUpTableTotal);
+
+        foreach (var weight in _powerUpTable)
+        {
+            if (randomNum <= weight)
+            {             
+                //Debug.Log("RandomNumber: " + randomNum + " is Less Than Equal to Weight: " + weight + " True");
+
+                //Debug.Log("Spawn: " + _powerUpPrefabs[a]);
+
+                _selectedPowerUp = _powerUpPrefabs[a];
+
+                return;
+            }
+            else
+            {
+                a++;
+
+                randomNum -= weight;
+
+                //Debug.Log("RandomNum: " + randomNum + " Weight: " + weight + " False");
+
+                if (a >= 8)
+                {
+                    a = 0;
+                }
+            }
         }
     }
 

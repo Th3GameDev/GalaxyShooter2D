@@ -930,6 +930,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asteroid
       objectReference: {fileID: 0}
+    - target: {fileID: 1060494663567875157, guid: a5b7563932154bb4d8f6b4fd7e89d268,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6241196588984800926, guid: a5b7563932154bb4d8f6b4fd7e89d268,
         type: 3}
       propertyPath: m_RootOrder
@@ -1797,15 +1802,18 @@ MonoBehaviour:
   - {fileID: 2971257347489358889, guid: 266e414de471ed548bf0f480a6170005, type: 3}
   - {fileID: 7767294297209188708, guid: cab23d14a953c1f42a87502547b694c5, type: 3}
   _powerUpPrefabs:
-  - {fileID: 6887113265765559422, guid: 43fbdc1dc7533b441a396a53e1b06503, type: 3}
+  - {fileID: 1491002477960467326, guid: d93a7320f093bdf4f8bc5cccf1bbebb9, type: 3}
   - {fileID: 6397897702962640, guid: 2b67d238cc4f9ba48bcca8372162a656, type: 3}
   - {fileID: 6955464850989410492, guid: e03c4aa9850bb6c4d90f315190b945cf, type: 3}
   - {fileID: 1352107711306666741, guid: 1f6fad0a093f37d4990e4e83da419a75, type: 3}
-  - {fileID: 1491002477960467326, guid: d93a7320f093bdf4f8bc5cccf1bbebb9, type: 3}
+  - {fileID: 6887113265765559422, guid: 43fbdc1dc7533b441a396a53e1b06503, type: 3}
   - {fileID: 5241413084761383795, guid: 5bd8cd37f7d11b04aaf25e7aecbcede4, type: 3}
   - {fileID: 8154027414313650712, guid: 6676f52a065577e4a95cb366b1d9ba31, type: 3}
   _powerUpContainer: {fileID: 1919032780}
   _stopSpawning: 0
+  stopSpawningPowerUp: 0
+  _powerUpTable: 320000001e00000019000000140000000f0000000a00000005000000
+  _powerUpTableTotal: 0
   _positions:
   - {x: 0, y: 7, z: 0}
   - {x: 2, y: 7, z: 0}
@@ -1816,6 +1824,7 @@ MonoBehaviour:
   - {x: -4, y: 7, z: 0}
   - {x: -6, y: 7, z: 0}
   - {x: -8, y: 7, z: 0}
+  _selectedPowerUp: {fileID: 0}
 --- !u!4 &1153390231
 Transform:
   m_ObjectHideFlags: 0
