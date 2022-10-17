@@ -94,11 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade2d5debedf0e0429ae9e0c347790c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   _laserSpeed: 8
-  _isEnemyLaser: 1
   _isGuidedLaser: 0
-  _guidedLaserRadius: {fileID: 2937267529746149082, guid: c1905a64214327540bb9dcb126d863a4,
-    type: 3}
+  _isEnemyLaser: 1
 --- !u!1 &708063340183194063
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour
     private Vector3 _lastPos;
 
 
-    public GameObject _selectedPowerUp;
+    private GameObject _selectedPowerUp;
 
 
     // Start is called before the first frame update
@@ -82,25 +82,42 @@ public class SpawnManager : MonoBehaviour
         {
             if (enemiesSpawned != _waveManager.enemiesToSpawn)
             {
-                if (_waveManager.currentWave < 5)
+                
+                if (_waveManager.currentWave < 3)
                 {
                     GameObject newEnemy = Instantiate(_enemyPrefabs[0], RandomPos(), Quaternion.identity); //Spawning Enemy Here
 
                     newEnemy.transform.parent = _enemyContainer.transform;
 
                     _waveManager.enemiesLeft++;
+
                     enemiesSpawned++;
 
                 }
-                else if (_waveManager.currentWave >= 5)
+                else if (_waveManager.currentWave >= 3)
                 {
-                    int randomEnemyID = Random.Range(0, 2); //Used for spawning random enemy from array
+                    Debug.Log("Wave is 3");
 
-                    GameObject newEnemy = Instantiate(_enemyPrefabs[randomEnemyID], RandomPos(), Quaternion.identity); //Spawning Enemy Here
+                    int randomEnemyID_2 = Random.Range(0, 2); //Used for spawning random enemy from array
 
-                    newEnemy.transform.parent = _enemyContainer.transform;
+                    GameObject newEnemy_2 = Instantiate(_enemyPrefabs[randomEnemyID_2], RandomPos(), Quaternion.identity); //Spawning Enemy Here
+
+                    newEnemy_2.transform.parent = _enemyContainer.transform;
 
                     _waveManager.enemiesLeft++;
+
+                    enemiesSpawned++;
+                }
+                else if (_waveManager.currentWave >= 5)
+                {
+                    int randomEnemyID_3 = Random.Range(0, 3); //Used for spawning random enemy from array
+
+                    GameObject newEnemy_3 = Instantiate(_enemyPrefabs[randomEnemyID_3], RandomPos(), Quaternion.identity); //Spawning Enemy Here
+
+                    newEnemy_3.transform.parent = _enemyContainer.transform;
+
+                    _waveManager.enemiesLeft++;
+
                     enemiesSpawned++;
                 }
             }

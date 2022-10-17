@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 3226018434648869491}
   - component: {fileID: 6666840947358084090}
   - component: {fileID: 7410155755599340582}
-  - component: {fileID: 9131039847927538133}
+  - component: {fileID: 2005054027054893872}
   m_Layer: 0
   m_Name: EnemyGuided_Laser
   m_TagString: EnemyLaser
@@ -4831,7 +4831,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 21300000, guid: a2240670715633245a68fa5a67fca84c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 1, y: 3}
   m_AdaptiveModeThreshold: 0.5
@@ -4886,7 +4886,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &9131039847927538133
+--- !u!114 &2005054027054893872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4895,11 +4895,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6271032827119719171}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b820485af3034c4c951932aab3d022e, type: 3}
+  m_Script: {fileID: 11500000, guid: ade2d5debedf0e0429ae9e0c347790c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   _laserSpeed: 6
-  target: {fileID: 0}
+  _isGuidedLaser: 1
   _isEnemyLaser: 1
 --- !u!1 &7547127136972846396
 GameObject:
@@ -9610,7 +9611,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 03b7d136834b3334cad77dcfe716b6fb, type: 2}
+  - {fileID: 2100000, guid: f7c764f183d7c674e805d6b20e1c246e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

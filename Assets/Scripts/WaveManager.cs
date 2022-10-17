@@ -65,7 +65,7 @@ public class WaveManager : MonoBehaviour
         _spawnManager.stopSpawningPowerUp = true;
         startOfWave = true;
         currentWave++;
-        enemiesToSpawn += 5;
+        enemiesToSpawn += 1;
         yield return new WaitForSeconds(2.5f);
         StartWave();
     }

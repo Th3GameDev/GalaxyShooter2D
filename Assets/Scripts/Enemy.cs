@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     private float _bottomBarrier = -7f;
 
     [SerializeField]
+    private float _ramSpeed;
+
+    [SerializeField]
     private float _dodgeSpeed, _dodgeWaitTime;
 
     private float _newDodgeXPos;
@@ -33,6 +36,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private bool _canDodge = false;
+
+    [SerializeField]
+    private bool isAggressive;
 
     private bool _dodge;
 
@@ -63,6 +69,15 @@ public class Enemy : MonoBehaviour
 
     private bool _firstPass = true;
 
+    [SerializeField]
+    private GameObject _enemyShield;
+
+    private bool _hasShield;
+
+    private float _distance;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,10 +100,25 @@ public class Enemy : MonoBehaviour
             Debug.LogWarning("Animator is Null!");
         }
 
-        if (_enemyID == 1)
+        if (_enemyID == 2)
         {
             _canDodge = true;
             StartCoroutine(Dodge());
+        }
+        else if (_enemyID == 1)
+        {
+            isAggressive = true;
+        }
+
+        if (_waveManager.currentWave >= 2)
+        {
+            int num = Random.Range(0, 2);
+
+            if (num == 1)
+            {
+                _hasShield = true;
+                _enemyShield.SetActive(true);
+            }
         }
     }
 
@@ -109,11 +139,31 @@ public class Enemy : MonoBehaviour
     {
         if (_canMove == true)
         {
-            transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
-        }
+            if (isAggressive != true)
+            {
+                transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
+            }
+            else if (isAggressive)
+            {
+                if (_player != null)
+                {
+                    _distance = Vector2.Distance(this.transform.position, _player.transform.position);
 
-        if (_enemyID == 0)
-        {
+                    if (_distance > 3)
+                    {
+                        transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
+
+                        transform.up = Vector3.zero;
+                    }
+                    else if (_distance < 3)
+                    {
+                        transform.position = Vector3.Lerp(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
+
+                        transform.up = this.transform.position - _player.transform.position;
+                    }
+                }
+            }
+
             if (transform.position.y <= _bottomBarrier)
             {
                 float newXPos = Random.Range(-8f, 8f);
@@ -121,9 +171,9 @@ public class Enemy : MonoBehaviour
                 _firstPass = false;
             }
         }
-        else if (_enemyID == 1)
-        {
 
+        if (_enemyID == 2)
+        {
             if (_canDodge)
             {
                 float newXPos = Mathf.MoveTowards(transform.position.x, _newDodgeXPos, _dodgeSpeed * Time.deltaTime);
@@ -138,12 +188,6 @@ public class Enemy : MonoBehaviour
             else
             {
                 _dodge = false;
-            }
-
-            if (transform.position.y <= _bottomBarrier)
-            {
-                transform.position = new Vector3(transform.position.x, 7f, 0f);
-                _firstPass = false;
             }
         }
     }
@@ -163,28 +207,8 @@ public class Enemy : MonoBehaviour
             Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
             StartCoroutine(EnemyFireCoolDown());
         }
-        /*
-        if (Time.time > _canFire)
-        {
-            if (_guidedLaser)
-            {
-                _fireRate = Random.Range(7f, 15f);
-
-                _canFire = Time.time + _fireRate;
-
-                Instantiate(_guidedLaserPrefab, _barrelOffset.position, Quaternion.identity);
-            }
-            else
-            {
-                _fireRate = Random.Range(7f, 15f);
-
-                _canFire = Time.time + _fireRate;
-
-                Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
-            }
-        }
-        */
     }
+
 
     IEnumerator EnemyFireCoolDown()
     {
@@ -252,48 +276,71 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            _waveManager.enemiesLeft--;
 
-            this.gameObject.GetComponent<Collider2D>().enabled = false;
-
-            _movementSpeed = 0;
-            _dodgeSpeed = 0;
-            _canShoot = false;
-
-            _anim.SetTrigger("OnDestroy");
-            _audioSource.clip = _exploAudioClip;
-            _audioSource.Play();
-
-            Destroy(this.gameObject, 1.2f);
-
-            if (_player != null)
+            if (_hasShield)
             {
+                _hasShield = false;
+                _enemyShield.SetActive(false);
                 _player.Damage();
+            }
+            else
+            {
+                //_playerRadius._enemies.Remove(this.transform);
+
+                _waveManager.enemiesLeft--;
+
+                this.gameObject.GetComponent<Collider2D>().enabled = false;
+
+                _movementSpeed = 0;
+                _ramSpeed = 0;
+                _dodgeSpeed = 0;
+                _canShoot = false;
+
+                _anim.SetTrigger("OnDestroy");
+                _audioSource.clip = _exploAudioClip;
+                _audioSource.Play();
+
+                Destroy(this.gameObject, 1.2f);
+
+                if (_player != null)
+                {
+                    _player.Damage();
+                }
             }
 
         }
         else if (other.tag == "PlayerLaser")
         {
-            _waveManager.enemiesLeft--;
 
-            this.gameObject.GetComponent<Collider2D>().enabled = false;
-
-            _movementSpeed = 0f;
-            _dodgeSpeed = 0;
-            _canShoot = false;
-
-            _anim.SetTrigger("OnDestroy");
-
-            _audioSource.clip = _exploAudioClip;
-            _audioSource.Play();
-
-            Destroy(this.gameObject, 1.2f);
-
-            Destroy(other.gameObject);
-
-            if (_player != null)
+            if (_hasShield)
             {
-                _player.AddScore(10);
+                _hasShield = false;
+                _enemyShield.SetActive(false);
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                _waveManager.enemiesLeft--;
+
+                this.gameObject.GetComponent<Collider2D>().enabled = false;
+
+                _movementSpeed = 0f;
+                _dodgeSpeed = 0;
+                _canShoot = false;
+
+                _anim.SetTrigger("OnDestroy");
+
+                _audioSource.clip = _exploAudioClip;
+                _audioSource.Play();
+
+                Destroy(this.gameObject, 1.2f);
+
+                Destroy(other.gameObject);
+
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
             }
         }
     }

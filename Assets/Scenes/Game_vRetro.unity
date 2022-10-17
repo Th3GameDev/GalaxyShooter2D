@@ -1800,6 +1800,7 @@ MonoBehaviour:
   _enemyContainer: {fileID: 1637521648}
   _enemyPrefabs:
   - {fileID: 2971257347489358889, guid: 266e414de471ed548bf0f480a6170005, type: 3}
+  - {fileID: 2198713976443852915, guid: e165174febbb012478c25ee46ddd3117, type: 3}
   - {fileID: 7767294297209188708, guid: cab23d14a953c1f42a87502547b694c5, type: 3}
   _powerUpPrefabs:
   - {fileID: 1491002477960467326, guid: d93a7320f093bdf4f8bc5cccf1bbebb9, type: 3}
@@ -1824,7 +1825,6 @@ MonoBehaviour:
   - {x: -4, y: 7, z: 0}
   - {x: -6, y: 7, z: 0}
   - {x: -8, y: 7, z: 0}
-  _selectedPowerUp: {fileID: 0}
 --- !u!4 &1153390231
 Transform:
   m_ObjectHideFlags: 0
@@ -3073,6 +3073,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1732810187300524377, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732810187300524380, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.5722752
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732810187300524380, guid: c02271865c0027140ad747ff1898dc28,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.83665943
+      objectReference: {fileID: 0}
     - target: {fileID: 6538316132357547130, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}
       propertyPath: m_Name
