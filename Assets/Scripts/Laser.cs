@@ -6,7 +6,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
 
-    private Player _player;
+    //private Player _player;
 
     public bool canMove = false;
 
@@ -24,10 +24,13 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private bool _isEnemyLaser = false;
 
+    [SerializeField]
+    private bool _isAggressive;
+
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        //_player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -37,9 +40,13 @@ public class Laser : MonoBehaviour
         {
             MoveUp();
         }
+        else if (_isEnemyLaser == true && _isAggressive == true)
+        {
+            MoveUp();
+        }
         else
         {
-            MoveDown();           
+            MoveDown();
         }
     }
 
@@ -65,9 +72,18 @@ public class Laser : MonoBehaviour
     {
         if (_isGuidedLaser == true)
         {
-            Vector3 targetDir = transform.position - _player.transform.position;
-            float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), .1f);
+            Player player = GameObject.Find("Player").GetComponent<Player>();
+
+            if (player != null)
+            {
+                Vector3 targetDir = transform.position - player.transform.position;
+                float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), .1f);
+            }
+            else
+            {
+                Debug.Log("Player is Null");
+            }
         }
 
         if (canMove == true)
@@ -86,12 +102,6 @@ public class Laser : MonoBehaviour
         }
     }
 
-    void EnemyGuidedLaser()
-    {
-        Vector3 targetDir = _player.transform.position - transform.position;
-        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), .1f);
-    }
 
     public void AssignEnemyLaser()
     {
@@ -103,11 +113,11 @@ public class Laser : MonoBehaviour
     {
         if (col.CompareTag("Player") && _isEnemyLaser == true)
         {
-            _player = col.GetComponent<Player>();
+            Player player = col.GetComponent<Player>();
 
-            if (_player != null)
+            if (player != null)
             {
-                _player.Damage();
+                player.Damage();
 
                 Destroy(this.gameObject);
             }

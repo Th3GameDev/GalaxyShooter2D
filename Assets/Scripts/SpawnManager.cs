@@ -95,9 +95,7 @@ public class SpawnManager : MonoBehaviour
 
                 }
                 else if (_waveManager.currentWave >= 3)
-                {
-                    Debug.Log("Wave is 3");
-
+                {                   
                     int randomEnemyID_2 = Random.Range(0, 2); //Used for spawning random enemy from array
 
                     GameObject newEnemy_2 = Instantiate(_enemyPrefabs[randomEnemyID_2], RandomPos(), Quaternion.identity); //Spawning Enemy Here

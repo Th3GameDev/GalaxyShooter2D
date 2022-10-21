@@ -10,11 +10,13 @@ public class Enemy : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    [SerializeField]        // 0 = Basic Enemy / 1 = DodgingEnemy
+    [SerializeField]        // 0 = Basic Enemy / 1 = AggressiveEnemy
     private int _enemyID;
 
     [SerializeField]
     private AudioClip _exploAudioClip;
+
+    private bool isAlive = true;
 
     [Header("Movement Settings")]
     [SerializeField]
@@ -50,6 +52,10 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _laserPrefab;
+
+    [SerializeField]
+    private GameObject _aggressiveEnemyLaser;
+
     [SerializeField]
     private GameObject _guidedLaserPrefab;
 
@@ -57,7 +63,7 @@ public class Enemy : MonoBehaviour
     private Transform _barrelOffset;
 
     [SerializeField]
-    private float _canFire = 2f;
+   // private float _canFire = 2f;
 
     private Player _player;
 
@@ -112,7 +118,7 @@ public class Enemy : MonoBehaviour
 
         if (_waveManager.currentWave >= 2)
         {
-            int num = Random.Range(0, 2);
+            int num = Random.Range(0, 3);
 
             if (num == 1)
             {
@@ -127,7 +133,7 @@ public class Enemy : MonoBehaviour
     {
         EnemyMovement();
 
-        if (_canShoot)
+        if (_canShoot && isAlive && isAggressive == false)
         {
             EnemyFire();
         }
@@ -135,6 +141,38 @@ public class Enemy : MonoBehaviour
         //Clamp X Axis
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8, 8), transform.position.y, 0);
     }
+
+    private void FixedUpdate()
+    {
+
+        if (isAggressive != true)
+            return;
+
+        if (isAggressive == true)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(_barrelOffset.position, Vector2.up);
+
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.tag == "Player")
+                {
+                    Debug.DrawRay(transform.position, Vector2.up * 5, Color.green);
+
+                    if (_canShoot)
+                    {
+                        EnemyFire();
+                    }
+                }
+                else
+                {
+                    Debug.DrawRay(transform.position, Vector2.up * 5, Color.red);
+                }
+            }
+        }
+    }
+
+
     void EnemyMovement()
     {
         if (_canMove == true)
@@ -156,7 +194,10 @@ public class Enemy : MonoBehaviour
                         transform.up = Vector3.zero;
                     }
                     else if (_distance < 3)
-                    {
+                    {                     
+                        if (isAlive != true)
+                            return;
+                        
                         transform.position = Vector3.Lerp(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
 
                         transform.up = this.transform.position - _player.transform.position;
@@ -201,7 +242,13 @@ public class Enemy : MonoBehaviour
             Instantiate(_guidedLaserPrefab, _barrelOffset.position, Quaternion.identity);
             StartCoroutine(EnemyFireCoolDown());
         }
-        else if (_firstPass == false)
+        else if (isAggressive == true)
+        {
+            _canShoot = false;
+            Instantiate(_aggressiveEnemyLaser, _barrelOffset.position, Quaternion.identity);
+            StartCoroutine(EnemyFireCoolDown());
+        }
+        else if (_firstPass == false && isAggressive == false)
         {
             _canShoot = false;
             Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
@@ -285,8 +332,6 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                //_playerRadius._enemies.Remove(this.transform);
-
                 _waveManager.enemiesLeft--;
 
                 this.gameObject.GetComponent<Collider2D>().enabled = false;
@@ -294,7 +339,7 @@ public class Enemy : MonoBehaviour
                 _movementSpeed = 0;
                 _ramSpeed = 0;
                 _dodgeSpeed = 0;
-                _canShoot = false;
+                isAlive = false;
 
                 _anim.SetTrigger("OnDestroy");
                 _audioSource.clip = _exploAudioClip;
@@ -326,7 +371,7 @@ public class Enemy : MonoBehaviour
 
                 _movementSpeed = 0f;
                 _dodgeSpeed = 0;
-                _canShoot = false;
+                isAlive = false;
 
                 _anim.SetTrigger("OnDestroy");
 

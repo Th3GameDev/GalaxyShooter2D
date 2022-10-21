@@ -111,7 +111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2198713976443852922}
   - component: {fileID: 2198713976443852917}
-  - component: {fileID: 2198713976443852916}
   - component: {fileID: 2198713976443852919}
   - component: {fileID: 2198713976443852918}
   - component: {fileID: 2198713976443852913}
@@ -190,32 +189,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2198713976443852916
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2198713976443852915}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.00000023841858, y: -0.071144104}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4.316464, y: 3.4945116}
-  m_EdgeRadius: 0
 --- !u!50 &2198713976443852919
 Rigidbody2D:
   serializedVersion: 4
@@ -376,11 +349,13 @@ MonoBehaviour:
   _fireRate: 0.3
   _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
     type: 3}
+  _aggressiveEnemyLaser: {fileID: 6265905791199465008, guid: e4f70b71632295648b57aa40c62bc87b,
+    type: 3}
   _guidedLaserPrefab: {fileID: 6271032827119719171, guid: 56d0acc60204e3245a07c81fc18862b2,
     type: 3}
   _barrelOffset: {fileID: 2198713976910132861}
-  _canFire: 2
-  _canShoot: 0
+  _player: {fileID: 0}
+  _canShoot: 1
   _guidedLaser: 0
   _enemyShield: {fileID: 2198713976366391650}
 --- !u!58 &3669498578743092140
@@ -423,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2198713976910132860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.78, z: 0}
+  m_LocalPosition: {x: 0, y: 2.44, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 2198713976443852922}

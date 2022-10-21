@@ -169,8 +169,9 @@ public class Player : MonoBehaviour
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
+            ActivateTripleShot();
             //ActivateSpeedBoost();
-            ActivateGuidedLaser();
+            //ActivateGuidedLaser();
             //ActivateThruster();          
             //ActivateReload();
             //Damage();
