@@ -40,6 +40,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _exploPrefab;
 
+    [SerializeField]
+    private bool _collectPowerUps;
+
+    [SerializeField]
+    private float _powerupCollectSpeed;
+
     [Header("Shooting Settings")]
     [SerializeField]
     private int _maxAmmo = 15;
@@ -79,7 +85,7 @@ public class Player : MonoBehaviour
     [Header("PowerUps Settings")]
 
     //[SerializeField]
-   // private GuidedLaserRadius _laserRadius;
+    // private GuidedLaserRadius _laserRadius;
 
     [SerializeField]
     private int _guidedAmmoMax = 3;
@@ -117,7 +123,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _playerSprite;
-
 
     // Start is called before the first frame update
     void Start()
@@ -166,10 +171,30 @@ public class Player : MonoBehaviour
     {
         Movement();
 
+        if (Input.GetKeyUp(KeyCode.C) && _collectPowerUps == false)
+        {
+            ActivatePowerUpCollect();
+        }
+
+        if (_collectPowerUps)
+        {
+            GameObject[] powerUp = GameObject.FindGameObjectsWithTag("PowerUp");
+
+            if (powerUp != null)
+            {
+                foreach (GameObject p in powerUp)
+                {
+                    p.transform.position = Vector2.MoveTowards(p.transform.position, transform.position, _powerupCollectSpeed * Time.deltaTime);                  
+                }
+            }
+
+        }
+
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
-            ActivateTripleShot();
+            Destroy(gameObject);
+            //ActivateTripleShot();
             //ActivateSpeedBoost();
             //ActivateGuidedLaser();
             //ActivateThruster();          
@@ -239,7 +264,7 @@ public class Player : MonoBehaviour
     void Shoot()
     {
         if (_isTripleShotActive)
-        {           
+        {
             Instantiate(_tripleShotLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
@@ -247,7 +272,7 @@ public class Player : MonoBehaviour
         else if (_isGuidedLaserActive == true && _guidedCurrentAmmo > 0)
         {
             _guidedCurrentAmmo--;
-            _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);         
+            _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);
             Instantiate(_guidedLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
@@ -320,12 +345,12 @@ public class Player : MonoBehaviour
         if (_currentLives == 2)
         {
             _rightDamagedEngine.SetActive(true);
-            _camShake.ShakeCamera();           
+            _camShake.ShakeCamera();
         }
         else if (_currentLives == 1)
         {
             _leftDamagedEngine.SetActive(true);
-            _camShake.ShakeCamera();           
+            _camShake.ShakeCamera();
         }
 
         StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));
@@ -354,6 +379,12 @@ public class Player : MonoBehaviour
         {
             _uiManager.UpdateScore(_score);
         }
+    }
+
+    void ActivatePowerUpCollect()
+    {  
+        _collectPowerUps = true;
+        StartCoroutine(PickUpCollect());      
     }
 
     void ActivateThruster()
@@ -451,6 +482,13 @@ public class Player : MonoBehaviour
         _playerShieldVisualizer.SetActive(true);
     }
 
+    IEnumerator PickUpCollect()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        _collectPowerUps = false;
+    }
+
     IEnumerator TripleShotPowerUpTimer()
     {
         yield return new WaitForSeconds(_tripleShotTimeActive);
@@ -469,7 +507,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_guidedLaserTimeActive);
         _isGuidedLaserActive = false;
         _uiManager.UpdateAmmoCount(_currentAmmo);
-        
-        
+
+
     }
 }

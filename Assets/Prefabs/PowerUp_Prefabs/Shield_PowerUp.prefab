@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7391879032969369200}
   - component: {fileID: 6354320078853579328}
-  - component: {fileID: 4521557973615387444}
+  - component: {fileID: 1895266569837522015}
   - component: {fileID: 8071077030945043630}
   - component: {fileID: 6366969779886631675}
   - component: {fileID: 1758550478687836593}
   m_Layer: 0
   m_Name: Shield_PowerUp
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4521557973615387444
-BoxCollider2D:
+--- !u!58 &1895266569837522015
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,19 +98,9 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.024116516, y: 0.02925682}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.19950485}
   serializedVersion: 2
-  m_Size: {x: 3.0354028, y: 3.463647}
-  m_EdgeRadius: 0
+  m_Radius: 1.909317
 --- !u!50 &8071077030945043630
 Rigidbody2D:
   serializedVersion: 4

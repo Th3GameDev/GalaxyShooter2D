@@ -81,6 +81,8 @@ MonoBehaviour:
   _rightDamagedEngine: {fileID: 6538316134069315054}
   _exploPrefab: {fileID: 4922835023454153079, guid: 7a5543f0b2d4d5f4b95a5226f4886343,
     type: 3}
+  _collectPowerUps: 0
+  _powerupCollectSpeed: 7
   _maxAmmo: 15
   _currentAmmo: 0
   _fireRate: 0.3

@@ -98,6 +98,7 @@ MonoBehaviour:
   _laserSpeed: 8
   _isGuidedLaser: 0
   _isEnemyLaser: 1
+  _isAggressive: 0
 --- !u!1 &708063340183194063
 GameObject:
   m_ObjectHideFlags: 0

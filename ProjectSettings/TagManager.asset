@@ -10,6 +10,7 @@ TagManager:
   - VC_Camera
   - EnemyLaser
   - PlayerLaser
+  - PowerUp
   layers:
   - Default
   - TransparentFX

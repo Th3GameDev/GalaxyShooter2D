@@ -62,9 +62,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Transform _barrelOffset;
 
-    [SerializeField]
-   // private float _canFire = 2f;
-
     private Player _player;
 
     [SerializeField]
@@ -144,14 +141,9 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        if (isAggressive != true)
-            return;
-
-        if (isAggressive == true)
+        if (_enemyID == 1)
         {
             RaycastHit2D hit = Physics2D.Raycast(_barrelOffset.position, Vector2.up);
-
 
             if (hit.collider != null)
             {
@@ -168,6 +160,24 @@ public class Enemy : MonoBehaviour
                 {
                     Debug.DrawRay(transform.position, Vector2.up * 5, Color.red);
                 }
+            }
+        }
+        else if (_enemyID == 0)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(_barrelOffset.position, Vector2.down * .5f);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.tag == "PowerUp")
+                {
+                    Debug.DrawRay(_barrelOffset.position, Vector2.down * 5, Color.green);
+                    
+                    EnemyFire();
+                }
+            }
+            else
+            {
+                Debug.DrawRay(_barrelOffset.position, Vector2.down * 5, Color.red);
             }
         }
     }
@@ -194,14 +204,20 @@ public class Enemy : MonoBehaviour
                         transform.up = Vector3.zero;
                     }
                     else if (_distance < 3)
-                    {                     
-                        if (isAlive != true)
+                    {
+                        if (isAlive != true)                            
                             return;
-                        
+
                         transform.position = Vector3.Lerp(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
 
-                        transform.up = this.transform.position - _player.transform.position;
-                    }
+                        transform.up = this.transform.position - _player.transform.position;                       
+                    }                  
+                }
+                else
+                {
+                    transform.Translate(Vector3.down * _movementSpeed * Time.deltaTime);
+
+                    transform.up = Vector2.zero;
                 }
             }
 
@@ -293,7 +309,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                _fireRate = Random.Range(2f, 5f);
+                _fireRate = Random.Range(4f, 6f);
 
                 yield return new WaitForSeconds(_fireRate);
 

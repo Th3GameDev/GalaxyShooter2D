@@ -3073,41 +3073,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1732810187300524377, guid: c02271865c0027140ad747ff1898dc28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732810187300524380, guid: c02271865c0027140ad747ff1898dc28,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 3.5722752
-      objectReference: {fileID: 0}
-    - target: {fileID: 1732810187300524380, guid: c02271865c0027140ad747ff1898dc28,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: -0.83665943
-      objectReference: {fileID: 0}
     - target: {fileID: 6538316132357547130, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6538316132357547130, guid: c02271865c0027140ad747ff1898dc28,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6538316132357547131, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6538316132357547132, guid: c02271865c0027140ad747ff1898dc28,
-        type: 3}
-      propertyPath: _camShake
-      value: 
-      objectReference: {fileID: 967358330}
     - target: {fileID: 6538316132357547133, guid: c02271865c0027140ad747ff1898dc28,
         type: 3}
       propertyPath: m_RootOrder

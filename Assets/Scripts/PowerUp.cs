@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    //private AudioSource _audioSource;
+    
+    private Animator _anim;
+
     [SerializeField]
     private AudioClip _audioClip;
 
@@ -23,7 +25,7 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+       _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,11 @@ public class PowerUp : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void MoveTowrdsPlayer()
+    {
+
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -89,5 +96,17 @@ public class PowerUp : MonoBehaviour
 
             Destroy(gameObject);
         }
+        else if (col.CompareTag("EnemyLaser"))
+        {
+            this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+
+            _canMove = false;
+
+            _anim.SetTrigger("OnDestroy");
+
+            Destroy(gameObject, 1.5f);
+        }
     }
+
+
 }
