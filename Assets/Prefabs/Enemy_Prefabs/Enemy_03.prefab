@@ -345,6 +345,7 @@ MonoBehaviour:
   _dodgeWaitTime: 0
   _canMove: 1
   _canDodge: 0
+  _canAvoidShot: 0
   isAggressive: 1
   _fireRate: 0.3
   _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
@@ -354,9 +355,9 @@ MonoBehaviour:
   _guidedLaserPrefab: {fileID: 6271032827119719171, guid: 56d0acc60204e3245a07c81fc18862b2,
     type: 3}
   _barrelOffset: {fileID: 2198713976910132861}
-  _player: {fileID: 0}
   _canShoot: 1
   _guidedLaser: 0
+  _destroyPowerUps: 0
   _enemyShield: {fileID: 2198713976366391650}
 --- !u!58 &3669498578743092140
 CircleCollider2D:

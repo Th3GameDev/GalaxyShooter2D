@@ -40,6 +40,11 @@ public class Enemy : MonoBehaviour
     private bool _canDodge = false;
 
     [SerializeField]
+    private bool _canAvoidShot;
+
+    private bool _avoidShot;
+
+    [SerializeField]
     private bool isAggressive;
 
     private bool _dodge;
@@ -69,6 +74,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private bool _guidedLaser;
+
+    [SerializeField]
+    private bool _destroyPowerUps;
 
     private bool _firstPass = true;
 
@@ -122,6 +130,10 @@ public class Enemy : MonoBehaviour
                 _hasShield = true;
                 _enemyShield.SetActive(true);
             }
+            else if (num == 2)
+            {            
+                _canAvoidShot = true;
+            }
         }
     }
 
@@ -162,16 +174,16 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        else if (_enemyID == 0)
+        else if (_destroyPowerUps)
         {
-            RaycastHit2D hit = Physics2D.Raycast(_barrelOffset.position, Vector2.down * .5f);
+            RaycastHit2D hit = Physics2D.Raycast(_barrelOffset.position, Vector2.down * 5f);
 
             if (hit.collider != null)
             {
                 if (hit.collider.tag == "PowerUp")
                 {
                     Debug.DrawRay(_barrelOffset.position, Vector2.down * 5, Color.green);
-                    
+
                     EnemyFire();
                 }
             }
@@ -205,13 +217,13 @@ public class Enemy : MonoBehaviour
                     }
                     else if (_distance < 3)
                     {
-                        if (isAlive != true)                            
+                        if (isAlive != true)
                             return;
 
                         transform.position = Vector3.Lerp(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
 
-                        transform.up = this.transform.position - _player.transform.position;                       
-                    }                  
+                        transform.up = this.transform.position - _player.transform.position;
+                    }
                 }
                 else
                 {
@@ -227,6 +239,11 @@ public class Enemy : MonoBehaviour
                 transform.position = new Vector3(newXPos, 7f, 0f);
                 _firstPass = false;
             }
+        }
+
+        if (_avoidShot)
+        {
+            EnemyAvoidShot();
         }
 
         if (_enemyID == 2)
@@ -247,6 +264,22 @@ public class Enemy : MonoBehaviour
                 _dodge = false;
             }
         }
+    }
+
+    void EnemyAvoidShot()
+    {
+        float[] x = new float[2] { -2, 2 };
+
+        int index = Random.Range(0, x.Length);
+
+        Vector3 newXPos = new Vector3(x[index], 0, 0);
+
+        Vector3 newPos = transform.position += newXPos;
+
+        transform.position = Vector3.MoveTowards(transform.position, newPos, _movementSpeed * Time.deltaTime);
+
+        _avoidShot = false;
+        _canAvoidShot = false;
     }
 
 
@@ -372,12 +405,15 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "PlayerLaser")
         {
-
             if (_hasShield)
             {
                 _hasShield = false;
                 _enemyShield.SetActive(false);
                 Destroy(other.gameObject);
+            }
+            else if (_canAvoidShot)
+            {
+                _avoidShot = true;
             }
             else
             {

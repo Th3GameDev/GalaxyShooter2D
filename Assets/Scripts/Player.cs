@@ -40,12 +40,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _exploPrefab;
 
-    [SerializeField]
-    private bool _collectPowerUps;
-
-    [SerializeField]
-    private float _powerupCollectSpeed;
-
     [Header("Shooting Settings")]
     [SerializeField]
     private int _maxAmmo = 15;
@@ -86,6 +80,11 @@ public class Player : MonoBehaviour
 
     //[SerializeField]
     // private GuidedLaserRadius _laserRadius;
+    [SerializeField]
+    private bool _collectPowerUps;
+
+    [SerializeField]
+    private float _powerupCollectSpeed;
 
     [SerializeField]
     private int _guidedAmmoMax = 3;
@@ -193,12 +192,13 @@ public class Player : MonoBehaviour
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
-            Destroy(gameObject);
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            //Destroy(gameObject);
             //ActivateTripleShot();
             //ActivateSpeedBoost();
             //ActivateGuidedLaser();
             //ActivateThruster();          
-            //ActivateReload();
+            ActivateReload();
             //Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
@@ -484,7 +484,7 @@ public class Player : MonoBehaviour
 
     IEnumerator PickUpCollect()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         _collectPowerUps = false;
     }

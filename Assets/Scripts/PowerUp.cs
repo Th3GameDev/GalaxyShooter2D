@@ -44,11 +44,6 @@ public class PowerUp : MonoBehaviour
         }
     }
 
-    void MoveTowrdsPlayer()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
