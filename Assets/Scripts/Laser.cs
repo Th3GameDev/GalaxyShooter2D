@@ -6,7 +6,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
 
-    //private Player _player;
+    private Player _player;
 
     public bool canMove = false;
 
@@ -29,8 +29,12 @@ public class Laser : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        //_player = GameObject.Find("Player").GetComponent<Player>();
+    {       
+        //Throws Error
+        if (_isGuidedLaser)
+        {
+             _player = GameObject.Find("Player").GetComponent<Player>();
+        }
     }
 
     // Update is called once per frame
@@ -72,16 +76,16 @@ public class Laser : MonoBehaviour
     {
         if (_isGuidedLaser == true)
         {
-            Player player = GameObject.Find("Player").GetComponent<Player>();
-
-            if (player != null)
+            if (_player != null)
             {
-                Vector3 targetDir = transform.position - player.transform.position;
+                Vector3 targetDir = transform.position - _player.transform.position;
                 float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), .1f);
+                Destroy(gameObject, 1.2f);
             }
             else
             {
+                Destroy (gameObject);
                 Debug.Log("Player is Null");
             }
         }

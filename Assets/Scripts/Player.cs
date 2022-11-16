@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     private AudioSource _playerAudioSource;
 
     [SerializeField]
-    private AudioClip _audioClip;
+    private AudioClip[] _audioClips;
 
     private bool _canFire;
 
@@ -265,12 +265,16 @@ public class Player : MonoBehaviour
     {
         if (_isTripleShotActive)
         {
+            _playerAudioSource.clip = _audioClips[0];
+            _playerAudioSource.Play();
             Instantiate(_tripleShotLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
         }
         else if (_isGuidedLaserActive == true && _guidedCurrentAmmo > 0)
         {
+            _playerAudioSource.clip = _audioClips[0];
+            _playerAudioSource.Play();
             _guidedCurrentAmmo--;
             _uiManager.UpdateAmmoCount(_guidedCurrentAmmo);
             Instantiate(_guidedLaserPrefab, _laserOffset.transform.position, Quaternion.identity);
@@ -279,6 +283,8 @@ public class Player : MonoBehaviour
         }
         else if (_currentAmmo > 0 && _isGuidedLaserActive == false)
         {
+            _playerAudioSource.clip = _audioClips[0];
+            _playerAudioSource.Play();
             _currentAmmo--;
             _uiManager.UpdateAmmoCount(_currentAmmo);
             _fireRate = 0.3f;
@@ -286,10 +292,6 @@ public class Player : MonoBehaviour
             _canFire = false;
             StartCoroutine(LaserCoolDownTimer());
         }
-
-        _playerAudioSource.clip = _audioClip;
-        _playerAudioSource.Play();
-
     }
 
     IEnumerator LaserCoolDownTimer()
@@ -314,6 +316,7 @@ public class Player : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
     public void Damage()
     {
         if (_isShieldActive)
@@ -346,11 +349,15 @@ public class Player : MonoBehaviour
         {
             _rightDamagedEngine.SetActive(true);
             _camShake.ShakeCamera();
+            _playerAudioSource.clip = _audioClips[1];
+            _playerAudioSource.Play(); 
         }
         else if (_currentLives == 1)
         {
             _leftDamagedEngine.SetActive(true);
             _camShake.ShakeCamera();
+            _playerAudioSource.clip = _audioClips[1];
+            _playerAudioSource.Play();
         }
 
         StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));

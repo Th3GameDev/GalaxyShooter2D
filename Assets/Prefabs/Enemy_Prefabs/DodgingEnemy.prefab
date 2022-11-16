@@ -394,13 +394,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyID: 2
-  _exploAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _audioClips:
+  - {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _movementSpeed: 5
   _ramSpeed: 0
   _dodgeSpeed: 15
   _dodgeWaitTime: 1
   _canMove: 1
   _canDodge: 1
+  _canAvoidShot: 0
   isAggressive: 0
   _fireRate: 5
   _laserPrefab: {fileID: 434959043845584849, guid: e239c98734839604dbb6be962d41b268,
@@ -410,7 +412,7 @@ MonoBehaviour:
   _guidedLaserPrefab: {fileID: 6271032827119719171, guid: 56d0acc60204e3245a07c81fc18862b2,
     type: 3}
   _barrelOffset: {fileID: 1522958088643762874}
-  _canFire: -1
   _canShoot: 1
   _guidedLaser: 1
+  _destroyPowerUps: 0
   _enemyShield: {fileID: 3917375900618666069}

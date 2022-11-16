@@ -8,6 +8,17 @@ public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
 
+    [Header("Boss UI")]
+
+    [SerializeField]
+    private TextMeshProUGUI _bossAiNameText;
+
+    [SerializeField]
+    private Slider _bossHealthSlider;
+
+    //[SerializeField]
+    //private TextMeshProUGUI _bossHealthPercentageText;
+
     [Header("Wave UI")]
     [SerializeField]
     private TextMeshProUGUI _waveCounter;
@@ -99,6 +110,25 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateBossUI(float healthPercentage)
+    {
+
+        if (_bossHealthSlider.gameObject.activeSelf != true)
+        {
+            _bossAiNameText.gameObject.SetActive(true);
+            _bossHealthSlider.gameObject.SetActive(true);
+        }
+
+        if (healthPercentage <= 0)
+        {
+            _bossAiNameText.gameObject.SetActive(false);
+            _bossHealthSlider.gameObject.SetActive(false);
+        }
+
+        _bossHealthSlider.value = healthPercentage;
+        //_bossHealthPercentageText.text = Mathf.RoundToInt(healthPercentage) + "%";
     }
 
     void GameOverSequence()

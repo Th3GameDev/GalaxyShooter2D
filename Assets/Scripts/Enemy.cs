@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     private WaveManager _waveManager;
 
+    private UIManager _uiManager;
+
     private Animator _anim;
 
     private AudioSource _audioSource;
@@ -14,7 +16,7 @@ public class Enemy : MonoBehaviour
     private int _enemyID;
 
     [SerializeField]
-    private AudioClip _exploAudioClip;
+    private AudioClip[] _audioClips;
 
     private bool isAlive = true;
 
@@ -88,12 +90,17 @@ public class Enemy : MonoBehaviour
     private float _distance;
 
 
-
-
     // Start is called before the first frame update
     void Start()
     {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         _waveManager = GameObject.Find("SpawnManager").GetComponent<WaveManager>();
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("UIManager is Null.");
+        }
 
         if (_waveManager == null)
         {
@@ -103,6 +110,11 @@ public class Enemy : MonoBehaviour
         _audioSource = gameObject.GetComponent<AudioSource>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is Null!");
+        }
 
         _anim = GetComponent<Animator>();
 
@@ -131,7 +143,7 @@ public class Enemy : MonoBehaviour
                 _enemyShield.SetActive(true);
             }
             else if (num == 2)
-            {            
+            {
                 _canAvoidShot = true;
             }
         }
@@ -193,7 +205,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
 
     void EnemyMovement()
     {
@@ -282,7 +293,6 @@ public class Enemy : MonoBehaviour
         _canAvoidShot = false;
     }
 
-
     void EnemyFire()
     {
         if (_guidedLaser && _firstPass == false)
@@ -291,20 +301,24 @@ public class Enemy : MonoBehaviour
             Instantiate(_guidedLaserPrefab, _barrelOffset.position, Quaternion.identity);
             StartCoroutine(EnemyFireCoolDown());
         }
-        else if (isAggressive == true)
+        else if (isAggressive == true && transform.position.y > -2)
         {
             _canShoot = false;
             Instantiate(_aggressiveEnemyLaser, _barrelOffset.position, Quaternion.identity);
             StartCoroutine(EnemyFireCoolDown());
+            _audioSource.clip = _audioClips[1];
+            _audioSource.Play();
+
         }
-        else if (_firstPass == false && isAggressive == false)
+        else if (_firstPass == false && isAggressive == false && transform.position.y > -2)
         {
             _canShoot = false;
             Instantiate(_laserPrefab, _barrelOffset.position, Quaternion.identity);
             StartCoroutine(EnemyFireCoolDown());
+            _audioSource.clip = _audioClips[1];
+            _audioSource.Play();
         }
     }
-
 
     IEnumerator EnemyFireCoolDown()
     {
@@ -342,7 +356,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                _fireRate = Random.Range(4f, 6f);
+                _fireRate = Random.Range(5f, 7f);
 
                 yield return new WaitForSeconds(_fireRate);
 
@@ -391,7 +405,7 @@ public class Enemy : MonoBehaviour
                 isAlive = false;
 
                 _anim.SetTrigger("OnDestroy");
-                _audioSource.clip = _exploAudioClip;
+                _audioSource.clip = _audioClips[0];
                 _audioSource.Play();
 
                 Destroy(this.gameObject, 1.2f);
@@ -427,7 +441,7 @@ public class Enemy : MonoBehaviour
 
                 _anim.SetTrigger("OnDestroy");
 
-                _audioSource.clip = _exploAudioClip;
+                _audioSource.clip = _audioClips[0];
                 _audioSource.Play();
 
                 Destroy(this.gameObject, 1.2f);

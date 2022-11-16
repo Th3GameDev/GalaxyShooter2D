@@ -15,6 +15,8 @@ public class WaveManager : MonoBehaviour
 
     public bool startOfWave;
 
+    public bool bossWave = false;
+
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -35,12 +37,16 @@ public class WaveManager : MonoBehaviour
             enemiesLeft = 0;
             EndWave();
         }
+        else if (enemiesLeft <= 0 && currentWave == 10)
+        {
+            Debug.Log("GameOver");
+        }
     }
 
     public void StartWave()
     {
-       startOfWave = true;
-       StartCoroutine(StartWaveRoutine());  
+        startOfWave = true;
+        StartCoroutine(StartWaveRoutine());
     }
 
     public void EndWave()
@@ -62,11 +68,24 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator EndWaveRoutine()
     {
-        _spawnManager.stopSpawningPowerUp = true;
-        startOfWave = true;
         currentWave++;
-        enemiesToSpawn += 1;
-        yield return new WaitForSeconds(2.5f);
-        StartWave();
+
+        if (currentWave >= 10)
+        {          
+            _spawnManager.stopSpawningPowerUp = true;
+            bossWave = true;
+            startOfWave = true;           
+            enemiesToSpawn = 1;
+            yield return new WaitForSeconds(2.5f);
+            StartWave();
+        }
+        else if (currentWave < 10)
+        {          
+            _spawnManager.stopSpawningPowerUp = true;
+            startOfWave = true;         
+            enemiesToSpawn += 1;
+            yield return new WaitForSeconds(2.5f);
+            StartWave();
+        }
     }
 }

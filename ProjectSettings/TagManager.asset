@@ -12,6 +12,7 @@ TagManager:
   - PlayerLaser
   - PowerUp
   - PLaser
+  - BossLaser
   layers:
   - Default
   - TransparentFX

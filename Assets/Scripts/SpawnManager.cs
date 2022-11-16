@@ -71,6 +71,7 @@ public class SpawnManager : MonoBehaviour
 
     }
 
+
     IEnumerator SpawnEnemyRoutine()
     {
 
@@ -81,10 +82,9 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning != true)
         {
             if (enemiesSpawned != _waveManager.enemiesToSpawn)
-            {
-                
+            {              
                 if (_waveManager.currentWave < 3)
-                {
+                {                   
                     GameObject newEnemy = Instantiate(_enemyPrefabs[0], RandomPos(), Quaternion.identity); //Spawning Enemy Here
 
                     newEnemy.transform.parent = _enemyContainer.transform;
@@ -94,8 +94,8 @@ public class SpawnManager : MonoBehaviour
                     enemiesSpawned++;
 
                 }
-                else if (_waveManager.currentWave >= 3)
-                {                   
+                else if (_waveManager.currentWave >= 3 && _waveManager.currentWave < 5 && _waveManager.bossWave == false)
+                {                  
                     int randomEnemyID_2 = Random.Range(0, 2); //Used for spawning random enemy from array
 
                     GameObject newEnemy_2 = Instantiate(_enemyPrefabs[randomEnemyID_2], RandomPos(), Quaternion.identity); //Spawning Enemy Here
@@ -106,8 +106,8 @@ public class SpawnManager : MonoBehaviour
 
                     enemiesSpawned++;
                 }
-                else if (_waveManager.currentWave >= 5)
-                {
+                else if (_waveManager.currentWave >= 5 && _waveManager.bossWave == false)
+                {                  
                     int randomEnemyID_3 = Random.Range(0, 3); //Used for spawning random enemy from array
 
                     GameObject newEnemy_3 = Instantiate(_enemyPrefabs[randomEnemyID_3], RandomPos(), Quaternion.identity); //Spawning Enemy Here
@@ -116,6 +116,13 @@ public class SpawnManager : MonoBehaviour
 
                     _waveManager.enemiesLeft++;
 
+                    enemiesSpawned++;
+                }
+                else if (_waveManager.currentWave == 10 && _waveManager.bossWave == true)
+                {
+                    GameObject bossAi = Instantiate(_enemyPrefabs[3], new Vector3(0, 8, 0), Quaternion.identity);
+                    bossAi.transform.parent = _enemyContainer.transform;
+                    _waveManager.enemiesLeft++;
                     enemiesSpawned++;
                 }
             }
@@ -139,7 +146,7 @@ public class SpawnManager : MonoBehaviour
 
         while (stopSpawningPowerUp == false)
         {
-            yield return new WaitForSeconds(randomTime);        
+            yield return new WaitForSeconds(randomTime);
 
             SelectPowerUp();
 
@@ -168,7 +175,7 @@ public class SpawnManager : MonoBehaviour
         foreach (var weight in _powerUpTable)
         {
             if (randomNum <= weight)
-            {             
+            {
                 //Debug.Log("RandomNumber: " + randomNum + " is Less Than Equal to Weight: " + weight + " True");
 
                 //Debug.Log("Spawn: " + _powerUpPrefabs[a]);

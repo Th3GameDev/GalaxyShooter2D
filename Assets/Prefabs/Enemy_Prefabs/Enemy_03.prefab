@@ -338,7 +338,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyID: 1
-  _exploAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _audioClips:
+  - {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  - {fileID: 8300000, guid: 10f9e8a5cd3f4794db82ae48a17990cc, type: 3}
   _movementSpeed: 5
   _ramSpeed: 2
   _dodgeSpeed: 0

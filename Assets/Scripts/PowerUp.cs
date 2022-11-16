@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    
+    private SpriteRenderer _renderer;
     private Animator _anim;
+    private AudioSource _source;
 
     [SerializeField]
-    private AudioClip _audioClip;
+    private AudioClip[] _audioClips;
 
     [Header("Power-Up Settings")]
     [SerializeField]
@@ -25,6 +26,8 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _renderer = GetComponent<SpriteRenderer>();
+        _source = GetComponent<AudioSource>();
        _anim = GetComponent<Animator>();
     }
 
@@ -50,7 +53,13 @@ public class PowerUp : MonoBehaviour
         {
             Player player = col.GetComponent<Player>();
 
-            AudioSource.PlayClipAtPoint(_audioClip, transform.position, 1);
+            //AudioSource.PlayClipAtPoint(_audioClips[0], transform.position, 1);
+            _source.clip = _audioClips[0];
+            _source.Play();
+
+            _renderer.enabled = false;
+
+            this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
 
             if (player != null)
             {           
@@ -89,7 +98,7 @@ public class PowerUp : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+            Destroy(gameObject, .5f);
         }
         else if (col.CompareTag("EnemyLaser"))
         {
@@ -99,7 +108,11 @@ public class PowerUp : MonoBehaviour
 
             _anim.SetTrigger("OnDestroy");
 
-            Destroy(gameObject, 1.5f);
+            _source.clip = _audioClips[1];
+            _source.Play();
+
+            Destroy(gameObject, .5f);
+            Destroy(col.gameObject);
         }
     }
 
