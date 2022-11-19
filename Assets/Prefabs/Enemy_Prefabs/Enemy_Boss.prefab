@@ -770,7 +770,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   - {fileID: 8300000, guid: 10f9e8a5cd3f4794db82ae48a17990cc, type: 3}
   - {fileID: 8300000, guid: 65955280a0c4aae42a00cbe2c544a3d1, type: 3}
-  _bossMaxHealth: 50
+  _bossMaxHealth: 1000
   _bossCurrentHealth: 0
   _enemyShield: {fileID: 9138072341962876638}
   _moveSpeed: 3
