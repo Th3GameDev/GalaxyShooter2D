@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
+    private GameManager _gameManager;
+
     private enum AttackState { DefaultState, BasicAttack, TimeBombAttack, LaserBeamAttack }
 
     [SerializeField]
@@ -100,6 +102,13 @@ public class BossAI : MonoBehaviour
 
     private void Awake()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (_gameManager == null)
+        {
+            Debug.LogError("GameManager is Null.");
+        }
+
         _anim = GetComponent<Animator>();
 
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
@@ -422,8 +431,6 @@ public class BossAI : MonoBehaviour
         }
         else if (_bossCurrentHealth == 0)
         {
-            Debug.Log("Blow Up");
-
             if (_spawnManager != null)
             {
                 _spawnManager.StopSpawning();
@@ -475,6 +482,10 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         Destroy(gameObject);
+
+        _gameManager.GameComplete();
+        
+        _uiManager.GameCompleteUI();
     }
 
     public IEnumerator DamageEffect(GameObject gameObject, int numBlinks, float seconds)

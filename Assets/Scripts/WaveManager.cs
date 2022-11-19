@@ -37,10 +37,6 @@ public class WaveManager : MonoBehaviour
             enemiesLeft = 0;
             EndWave();
         }
-        else if (enemiesLeft <= 0 && currentWave == 10)
-        {
-            Debug.Log("GameOver");
-        }
     }
 
     public void StartWave()

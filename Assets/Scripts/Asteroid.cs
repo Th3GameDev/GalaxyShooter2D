@@ -5,6 +5,7 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     private WaveManager _waveManager;
+    private GameManager _gameManager;
 
     [SerializeField]
     private GameObject _exploPrefab;
@@ -14,12 +15,19 @@ public class Asteroid : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {;
+    {
+
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _waveManager = GameObject.Find("SpawnManager").GetComponent<WaveManager>();
        
         if (_waveManager == null)
         {
             Debug.LogWarning("Wave Manager is Null");
+        }
+
+        if (_gameManager == null)
+        {
+            Debug.LogWarning("Game Manager is Null");
         }
     }
 
@@ -37,7 +45,7 @@ public class Asteroid : MonoBehaviour
             
             Destroy(col.gameObject);
 
-            //_spawnManager.StartSpawning();
+            _gameManager.GameStarted();         
             _waveManager.StartWave();
 
             Destroy(gameObject);

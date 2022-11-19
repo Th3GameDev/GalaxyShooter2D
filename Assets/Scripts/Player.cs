@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
 
+    public int currentScore;
+
     //[Header("Player Setting")]
     private Transform _player;
 
@@ -125,7 +127,7 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAudioSource = GetComponent<AudioSource>();
@@ -189,19 +191,21 @@ public class Player : MonoBehaviour
 
         }
 
+        /*
         //Testing 
         if (Input.GetKeyUp(KeyCode.T))
         {
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            //gameObject.GetComponent<Collider2D>().enabled = false;
             //Destroy(gameObject);
             //ActivateTripleShot();
             //ActivateSpeedBoost();
             //ActivateGuidedLaser();
             //ActivateThruster();          
-            ActivateReload();
+            //ActivateReload();
             //Damage();
             //StartCoroutine(BlinkGameObject(_playerSprite, numberofBlinks, blinkRate));          
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.Space) && _canFire)
         {
@@ -381,6 +385,8 @@ public class Player : MonoBehaviour
     public void AddScore(int points)
     {
         _score += points;
+
+        currentScore = _score;
 
         if (_uiManager != null)
         {

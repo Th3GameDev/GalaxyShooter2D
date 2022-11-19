@@ -119,7 +119,7 @@ public class SpawnManager : MonoBehaviour
                     enemiesSpawned++;
                 }
                 else if (_waveManager.currentWave == 10 && _waveManager.bossWave == true)
-                {
+                {                   
                     GameObject bossAi = Instantiate(_enemyPrefabs[3], new Vector3(0, 8, 0), Quaternion.identity);
                     bossAi.transform.parent = _enemyContainer.transform;
                     _waveManager.enemiesLeft++;

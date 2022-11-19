@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 986412033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07f9ad28b58c6c142b813b34be909116, type: 3}
+  m_Script: {fileID: 11500000, guid: 94f6747406a5c5e41bf5d6de61b78a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &9138072341417878720
@@ -677,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9138072342828439916
 Transform:
   m_ObjectHideFlags: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   - {fileID: 8300000, guid: 10f9e8a5cd3f4794db82ae48a17990cc, type: 3}
   - {fileID: 8300000, guid: 65955280a0c4aae42a00cbe2c544a3d1, type: 3}
-  _bossMaxHealth: 1000
+  _bossMaxHealth: 50
   _bossCurrentHealth: 0
   _enemyShield: {fileID: 9138072341962876638}
   _moveSpeed: 3

@@ -7,6 +7,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     private GameManager _gameManager;
+    private Player _p;
 
     [Header("Boss UI")]
 
@@ -38,6 +39,21 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _ammoCountText;
 
+    [Header("Game Paused UI")]
+    [SerializeField]
+    private GameObject _exitPopUpWindow;
+
+    [Header("GameComplete UI")]
+    [SerializeField]
+    private GameObject _gameCompleteWindow;
+
+    [SerializeField]
+    private TextMeshProUGUI _gameScoreTotal;
+
+    [SerializeField]
+    private TextMeshProUGUI _gameTimeTotal;
+
+
     [Header("GameOver UI")]
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
@@ -63,6 +79,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _p = GameObject.Find("Player").GetComponent<Player>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (_gameManager == null)
@@ -76,6 +93,11 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + 0;
 
         _ammoCountText.text = "Ammo:" + 15;
+    }
+
+    void Update()
+    {
+
     }
 
     public void UpdateWaveStartDisplay(int currentWave)
@@ -92,7 +114,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateAmmoCount(int playerAmmo)
-    {  
+    {
         _ammoCountText.text = $"Ammo:{playerAmmo}";
     }
 
@@ -131,6 +153,19 @@ public class UIManager : MonoBehaviour
         //_bossHealthPercentageText.text = Mathf.RoundToInt(healthPercentage) + "%";
     }
 
+    public void GameCompleteUI()
+    {
+
+        _gameCompleteWindow.SetActive(true);
+
+        if (_p != null)
+        {
+            _gameScoreTotal.text = $"{_p.currentScore.ToString()}";
+        }
+
+        _gameTimeTotal.text = string.Format("{0,00}:{1,00}", _gameManager.minutes.ToString(), _gameManager.seconds.ToString());
+    }
+
     void GameOverSequence()
     {
         _gameManager.GameOver();
@@ -141,14 +176,29 @@ public class UIManager : MonoBehaviour
         StartCoroutine(BlinkGameObject(_gameOverText.gameObject, _gameOverNumberOfBlinks, _gameOverTextBlinkTime, true));
     }
 
-    public IEnumerator BlinkGameObject(GameObject gameObjectOne, int numBlinks, float seconds, bool diactivateOnExit) 
-    {      
+    public void ExitGamePopUp(bool paused)
+    {
+        //Pop Up Exit UI
+        if (paused)
+        {
+            _exitPopUpWindow.GetComponent<Animator>().SetTrigger("OnWindowOpen");
+            _exitPopUpWindow.SetActive(true);
+        }
+        else
+        {
+            _exitPopUpWindow.GetComponent<Animator>().SetTrigger("OnWindowClose");
+            _exitPopUpWindow.SetActive(false);
+        }       
+    }
+
+    public IEnumerator BlinkGameObject(GameObject gameObjectOne, int numBlinks, float seconds, bool diactivateOnExit)
+    {
         TextMeshProUGUI text = gameObjectOne.GetComponent<TextMeshProUGUI>();
-      
+
         for (int i = 0; i < numBlinks * 2; i++)
         {
             //toggle Text
-            text.enabled = !text.enabled;            
+            text.enabled = !text.enabled;
             //wait for a bit
             yield return new WaitForSeconds(seconds);
         }
