@@ -10,22 +10,22 @@ public class CameraShake : MonoBehaviour
     [SerializeField]
     private AnimationCurve _cameraShakeCurve;
 
-    private bool isShaking;
+    private bool _isShaking;
 
     public  void ShakeCamera()
     {
         StartCoroutine(ShakeCameraRoutine());
-
-        if (isShaking)
-        {
-            isShaking = false;
-            StopCoroutine(ShakeCameraRoutine());
-        }
+        
+        //if (_isShaking)
+        //{
+        //    _isShaking = false;
+        //    StopCoroutine(ShakeCameraRoutine());
+        //}
     }
 
     IEnumerator ShakeCameraRoutine()
     {
-        isShaking = true;
+        _isShaking = true;
 
         Vector3 originalPos = transform.position;
 
@@ -40,6 +40,6 @@ public class CameraShake : MonoBehaviour
         }
 
         transform.position = originalPos;
-        isShaking = false;
+        _isShaking = false;
     }
 }

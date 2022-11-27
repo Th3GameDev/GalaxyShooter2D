@@ -17,9 +17,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Slider _bossHealthSlider;
 
-    //[SerializeField]
-    //private TextMeshProUGUI _bossHealthPercentageText;
-
     [Header("Wave UI")]
     [SerializeField]
     private TextMeshProUGUI _waveCounter;
@@ -160,7 +157,7 @@ public class UIManager : MonoBehaviour
 
         if (_p != null)
         {
-            _gameScoreTotal.text = $"{_p.currentScore.ToString()}";
+            _gameScoreTotal.text = $"{_p.CurrentScore().ToString()}";
         }
 
         _gameTimeTotal.text = string.Format("{0,00}:{1,00}", _gameManager.minutes.ToString(), _gameManager.seconds.ToString());

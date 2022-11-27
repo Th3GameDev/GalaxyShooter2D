@@ -3151,6 +3151,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 372210456}
     m_Modifications:
+    - target: {fileID: 4657043259291072211, guid: b07e384de738a6c41873086c32773d18,
+        type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657043259291072211, guid: b07e384de738a6c41873086c32773d18,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2a3f5d09551cee448a7d649d045b89eb, type: 2}
     - target: {fileID: 4657589628382540231, guid: b07e384de738a6c41873086c32773d18,
         type: 3}
       propertyPath: simulationSpeed
@@ -4091,7 +4101,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088189508}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 8bc61149e7882284aae818c8d3ae5c1b, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 4cc28f67137ce1e45b673837741dc63c, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}

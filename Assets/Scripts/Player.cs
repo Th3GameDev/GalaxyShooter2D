@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
 
-    public int currentScore;
-
     //[Header("Player Setting")]
     private Transform _player;
 
@@ -127,7 +125,7 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAudioSource = GetComponent<AudioSource>();
@@ -185,7 +183,7 @@ public class Player : MonoBehaviour
             {
                 foreach (GameObject p in powerUp)
                 {
-                    p.transform.position = Vector2.MoveTowards(p.transform.position, transform.position, _powerupCollectSpeed * Time.deltaTime);                  
+                    p.transform.position = Vector2.MoveTowards(p.transform.position, transform.position, _powerupCollectSpeed * Time.deltaTime);
                 }
             }
 
@@ -354,7 +352,7 @@ public class Player : MonoBehaviour
             _rightDamagedEngine.SetActive(true);
             _camShake.ShakeCamera();
             _playerAudioSource.clip = _audioClips[1];
-            _playerAudioSource.Play(); 
+            _playerAudioSource.Play();
         }
         else if (_currentLives == 1)
         {
@@ -386,18 +384,21 @@ public class Player : MonoBehaviour
     {
         _score += points;
 
-        currentScore = _score;
-
         if (_uiManager != null)
         {
             _uiManager.UpdateScore(_score);
         }
     }
 
+    public int CurrentScore()
+    {
+        return _score;
+    }
+
     void ActivatePowerUpCollect()
-    {  
+    {
         _collectPowerUps = true;
-        StartCoroutine(PickUpCollect());      
+        StartCoroutine(PickUpCollect());
     }
 
     void ActivateThruster()
